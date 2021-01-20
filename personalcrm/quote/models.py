@@ -37,7 +37,9 @@ class Contact(models.Model):
     first_name = models.CharField(max_length=20)
     middle_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
-    company = models.ForeignKey(Company, on_delete=PROTECT, name="company_contact")
+    company = models.ForeignKey(
+        Company, on_delete=PROTECT, related_name="company_contact"
+    )
     email = models.EmailField()
     phone = models.CharField(max_length=12)
     mobile = models.CharField(max_length=12)
@@ -48,9 +50,15 @@ class Contact(models.Model):
 
 
 class Quote(models.Model):
-    creator = models.ForeignKey(User, on_delete=PROTECT, related_name="quote_creator")
+    creator = models.ForeignKey(
+        User, on_delete=PROTECT, related_name="quote_creator", blank=False
+    )
     creation_date = models.DateTimeField(auto_now_add=True)
     edit_date = models.DateTimeField(auto_now=True)
     products = models.ManyToManyField("Product")
-    company = models.ForeignKey(Company, on_delete=PROTECT, name="company_quoted")
-    contact = models.ForeignKey(Contact, on_delete=PROTECT, name="contact_quoted")
+    company = models.ForeignKey(
+        Company, on_delete=PROTECT, related_name="company_quoted"
+    )
+    contact = models.ForeignKey(
+        Contact, on_delete=PROTECT, related_name="contact_quoted"
+    )
