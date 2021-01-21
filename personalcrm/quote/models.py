@@ -32,6 +32,9 @@ class Company(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
     edit_date = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        verbose_name_plural = "Companies"
+
 
 class Contact(models.Model):
     first_name = models.CharField(max_length=20)
