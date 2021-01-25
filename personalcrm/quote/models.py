@@ -7,8 +7,14 @@ class User(AbstractUser):
     pass
 
 
+class Brand(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+
+
 class Product(models.Model):
-    pn = models.CharField(max_length=50, primary_key=True)
+    pn = models.CharField(max_length=50, unique=True)
+    brand = models.ForeignKey(Brand, on_delete=PROTECT, related_name="brand_name")
+    title = models.CharField(max_length=100)
     description = models.TextField()
     list_price = models.IntegerField()
     multiplier = models.DecimalField(max_digits=5, decimal_places=3)
@@ -16,6 +22,10 @@ class Product(models.Model):
     editor = models.ForeignKey(User, on_delete=PROTECT, related_name="product_editor")
     creation_date = models.DateTimeField(auto_now_add=True)
     edit_date = models.DateTimeField(auto_now=True)
+    note = models.TextField()
+
+    def __str__(self) -> str:
+        return f"{self.pn} | {self.title}"
 
 
 class Company(models.Model):
@@ -35,6 +45,10 @@ class Company(models.Model):
     class Meta:
         verbose_name_plural = "Companies"
 
+    def __str__(self) -> str:
+
+        return f"{self.name} | {self.category}"
+
 
 class Contact(models.Model):
     first_name = models.CharField(max_length=20)
@@ -52,16 +66,16 @@ class Contact(models.Model):
     edit_date = models.DateTimeField(auto_now=True)
 
 
-class Quote(models.Model):
-    creator = models.ForeignKey(
-        User, on_delete=PROTECT, related_name="quote_creator", blank=False
-    )
-    creation_date = models.DateTimeField(auto_now_add=True)
-    edit_date = models.DateTimeField(auto_now=True)
-    products = models.ManyToManyField("Product")
-    company = models.ForeignKey(
-        Company, on_delete=PROTECT, related_name="company_quoted"
-    )
-    contact = models.ForeignKey(
-        Contact, on_delete=PROTECT, related_name="contact_quoted"
-    )
+# class Quote(models.Model):
+#     creator = models.ForeignKey(
+#         User, on_delete=PROTECT, related_name="quote_creator", blank=False
+#     )
+#     creation_date = models.DateTimeField(auto_now_add=True)
+#     edit_date = models.DateTimeField(auto_now=True)
+#     products = models.ManyToManyField("Product")
+#     company = models.ForeignKey(
+#         Company, on_delete=PROTECT, related_name="company_quoted"
+#     )
+#     contact = models.ForeignKey(
+#         Contact, on_delete=PROTECT, related_name="contact_quoted"
+#     )
