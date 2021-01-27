@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Product, Quote, Company, Contact
+from .models import User, Company, Contact, Product, Quote
 
 admin.site.register(User)
 admin.site.register(Product)
