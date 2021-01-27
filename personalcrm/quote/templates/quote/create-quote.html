@@ -1,0 +1,85 @@
+{% extends 'quote/layout.html' %}
+
+{% block body %}
+    <h1>Create Quote</h1>
+    <form id="new-quote-form" action="" method="post">
+        <div class="form-group">
+            <label for="companySelect">Company:</label>
+            <select class="form-control" id="companySelect">
+                {% for company in company_options %}
+                <option>{{ company }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="reference">Reference #:</label>
+            <input type="text" class="form-control" id="reference" placeholder="">
+        </div>
+        <div class="form-group">
+            <label for="reference">Date:</label>
+            <div class="input-group date" data-provide="datepicker">
+                <input type="text" class="form-control">
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-th"></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <input type="text" class="form-control" id="description" placeholder="">
+        </div>
+        <div class="form-group">
+            <table class="table" id="form-table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Qty</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Discount</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Hidden</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id="row-1">
+                        <th scope="row">1</th>
+                        <td class="description-column">
+                            <div class="form-group">
+                                <select class="form-control" id="companySelect">
+                                    {% for product in product_options %}
+                                    <option>{{ product }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </td>
+                        <td class="qty-column">
+                            <div class="form-group">
+                                <input type="number" class="form-control" id="qty" placeholder="Qty" min="0" step="1">
+                            </div>
+                        </td>
+                        <td class="price-column">
+                            <div class="form-group">
+                                <input type="number" class="form-control" id="price" min="0.01">
+                            </div>
+                        </td>
+                        <td class="discount-column">
+                            <div class="form-group">
+                                <input type="number" class="form-control" id="discount" placeholder="0" min="0.01" max="99.99">
+                            </div>
+                            <div>%</div>
+                        </td>
+                        <td class="amount-column"></td>
+                        <td class="hidden-column">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="hiddenCheck">
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button id="new-item">Add new item</button>
+        </div>
+        
+    </form>
+{% endblock body %}
