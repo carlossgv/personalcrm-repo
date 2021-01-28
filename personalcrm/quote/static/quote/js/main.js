@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   $('.datepicker').datepicker();
 
-  $('.product-select').change((e) => {
+  $('.product-options').change((e) => {
     let tr = e.target.closest('tr');
     updateProduct(tr);
   });
@@ -15,6 +15,10 @@ document.addEventListener('DOMContentLoaded', function () {
   $('.price, .qty, .discount').keyup((e) => {
     let tr = e.target.closest('tr');
     updateAmount(tr);
+  });
+
+  $('#shipping-input, #tax-input').keyup(() => {
+    updateTotal();
   });
 
   $('.deleteRowButton').click((e) => {
@@ -33,20 +37,37 @@ document.addEventListener('DOMContentLoaded', function () {
   console.log('Document loaded!');
 });
 
-function updateProduct(tr) {
-  let pn = $(tr).find('.product-select').val();
-  if (pn === 'Select product') {
-    $(tr).find('.product-title').html('');
-    $(tr).find('.product-description').html('');
-  } else {
-    fetch(`product/${pn}`)
-      .then((response) => response.json())
-      .then((data) => {
-        $(tr).find('.product-title').html(data['title']);
-        $(tr).find('.product-brand').html(`Brand: ${data['brand']}`);
-        $(tr).find('.product-description').html(data['description']);
-      });
+function updateTotal() {
+  let subtotal = 0;
+  let amountArray = $('.amount');
+  for (let i = 0; i < amountArray.length; i++) {
+    subtotal = subtotal + parseFloat(amountArray[i]['innerHTML']);
   }
+
+  let shipping = parseFloat($('#shipping-input').val());
+  let tax = parseFloat($('#tax-input').val());
+  let tax_amount = (subtotal + shipping) * tax * 0.01;
+  let total = subtotal + shipping + tax_amount;
+
+  $('#subtotal-amount').html(subtotal);
+  $('#shipping-amount').html(shipping);
+  $('#tax-amount').html(tax_amount);
+  $('#total-amount').html(total);
+}
+
+function updateProduct(tr) {
+  let pn = $(tr).find('.product-options').val();
+
+  pn = pn.split(':')[0];
+
+  // TO DO: CATCH ERROR WHEN INPUT DOESNT MATCH SITE
+  fetch(`product/${pn}`)
+    .then((response) => response.json())
+    .then((data) => {
+      $(tr).find('.product-title').html(data['title']);
+      $(tr).find('.product-brand').html(`Brand: ${data['brand']}`);
+      $(tr).find('.product-description').html(data['description']);
+    });
 }
 
 function updateAmount(tr) {
@@ -57,6 +78,7 @@ function updateAmount(tr) {
   let amount = (qty * price * (100 - discount)) / 100;
 
   $(tr).find('.amount').html(amount);
+  updateTotal();
 }
 
 function deleteRow(tr) {

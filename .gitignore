@@ -13,4 +13,5 @@ tests/.coverage
 build/
 tests/report/
 personalcrm/quote/csv files for
-personalcrm/db.sqlite3
+personalcrm/db.sqlite
+personalcrm/TODOLIST.txt

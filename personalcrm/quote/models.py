@@ -113,6 +113,7 @@ class Quote(models.Model):
         Contact, on_delete=PROTECT, related_name="contact_quoted", blank=True, null=True
     )
     note = models.TextField(blank=True, null=True)
+    internal_note = models.TextField(blank=True, null=True)
 
     def __str__(self) -> str:
         return (
