@@ -39,6 +39,21 @@ class Product(models.Model):
     def __str__(self) -> str:
         return f"{self.pn} | {self.title}"
 
+    def serialize(self):
+        return {
+            "pn": self.pn,
+            "brand": self.brand.name,
+            "title": self.title,
+            "description": self.description,
+            "list_price": self.list_price,
+            "multiplier": self.multiplier,
+            "creator": self.creator.username,
+            "editor": self.editor.username,
+            "creation_date": self.creation_date,
+            "edit_date": self.edit_date,
+            "note": self.note,
+        }
+
 
 class Company(models.Model):
     name = models.CharField(max_length=20, unique=True)
@@ -98,7 +113,6 @@ class Quote(models.Model):
         Contact, on_delete=PROTECT, related_name="contact_quoted", blank=True, null=True
     )
     note = models.TextField(blank=True, null=True)
-
 
     def __str__(self) -> str:
         return (

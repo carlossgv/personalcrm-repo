@@ -30,3 +30,10 @@ def request_product_options(request):
     product_options = [d["pn"] for d in product_options]
 
     return JsonResponse({"product_options": product_options})
+
+
+def get_product_info(request, pn):
+
+    product = Product.objects.get(pn=pn)
+
+    return JsonResponse(product.serialize(), safe=False)
