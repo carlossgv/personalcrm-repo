@@ -7,7 +7,8 @@
             <div id="general-first">
                 <div class="form-group">
                     <label for="companySelect">Company:</label>
-                    <select class="form-control" id="companySelect">
+                    <select class="form-select" id="companySelect">
+                        <option selected>Select company</option>
                         {% for company in company_options %}
                         <option>{{ company }}</option>
                         {% endfor %}
@@ -53,11 +54,15 @@
                         <th scope="row">1</th>
                         <td class="description-column">
                             <div class="form-group">
-                                <select class="form-control" id="companySelect">
+                                <select class="form-select product-select">
+                                    <option selected>Select product</option>
                                     {% for product in product_options %}
                                     <option>{{ product }}</option>
                                     {% endfor %}
                                 </select>
+                                <label class="product-title"></label>
+                                <label class="product-brand"></label>
+                                <textarea class="form-control product-description" name="product-description" id="" cols="30" rows="5"></textarea>
                             </div>
                         </td>
                         <td class="qty-column">

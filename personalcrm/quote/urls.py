@@ -10,4 +10,9 @@ urlpatterns = [
         views.request_product_options,
         name="request-product-options",
     ),
+    path(
+        "product/<str:pn>",
+        views.get_product_info,
+        name="product-info",
+    ),
 ]

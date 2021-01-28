@@ -5,27 +5,49 @@ document.addEventListener('DOMContentLoaded', function () {
     new_quote_button.click(() => (location.href = 'create-quote'));
   }
 
-  $('.price, .qty, .discount').keyup((event) => {
-    let tr = event.target.closest('tr');
+  $('.datepicker').datepicker();
+
+  $('.product-select').change((e) => {
+    let tr = e.target.closest('tr');
+    updateProduct(tr);
+  });
+
+  $('.price, .qty, .discount').keyup((e) => {
+    let tr = e.target.closest('tr');
     updateAmount(tr);
   });
 
-  $('.deleteRowButton').click((event) => {
-    let tr = event.target.closest('tr');
+  $('.deleteRowButton').click((e) => {
+    let tr = e.target.closest('tr');
     deleteRow(tr);
+  });
+
+  $('.hiddenCheck').click((e) => {
+    let checkbox = e.target;
+    let tr = e.target.closest('tr');
+    hideRow(tr, checkbox);
   });
 
   $('#new-item').click(() => addNewLine());
 
-  $('.hiddenCheck').click((event) => {
-    let checkbox = event.target;
-    let tr = event.target.closest('tr');
-    hideRow(tr, checkbox);
-  });
-
-  $('.datepicker').datepicker();
   console.log('Document loaded!');
 });
+
+function updateProduct(tr) {
+  let pn = $(tr).find('.product-select').val();
+  if (pn === 'Select product') {
+    $(tr).find('.product-title').html('');
+    $(tr).find('.product-description').html('');
+  } else {
+    fetch(`product/${pn}`)
+      .then((response) => response.json())
+      .then((data) => {
+        $(tr).find('.product-title').html(data['title']);
+        $(tr).find('.product-brand').html(`Brand: ${data['brand']}`);
+        $(tr).find('.product-description').html(data['description']);
+      });
+  }
+}
 
 function updateAmount(tr) {
   let qty = $(tr).find('.qty').val();
@@ -86,6 +108,11 @@ function addNewLine() {
         let tr = event.target.closest('tr');
         hideRow(tr, checkbox);
       });
+
+      $('.product-select').change((e) => {
+        let tr = e.target.closest('tr');
+        updateProduct(tr);
+      });
     });
 }
 
@@ -97,9 +124,13 @@ function newLine(products) {
     '</th>' +
     '                        <td class="description-column">' +
     '                            <div class="form-group">' +
-    '                                <select class="form-control" id="companySelect">' +
+    '                                <select class="form-select product-select">' +
+    '                                <option selected>Select product</option>' +
     `                                ${products}` +
     '                                </select>' +
+    '                                <label class="product-title"></label>' +
+    '                                <label class="product-brand"></label>' +
+    '                                <textarea class="form-control product-description" name="product-description" id="" cols="30" rows="5"></textarea>' +
     '                            </div>' +
     '                        </td>' +
     '                        <td class="qty-column">' +
@@ -116,7 +147,6 @@ function newLine(products) {
     '                            <div class="form-group">' +
     '                                <input type="number" class="form-control discount" id="discount" placeholder="%" min="0.01" max="99.99">' +
     '                            </div>' +
-    // '                            <div>%</div>' +
     '                        </td>' +
     '                        <td class="amount-column">' +
     '                            <div class="amount"></div>' +
