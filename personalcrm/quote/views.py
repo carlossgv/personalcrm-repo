@@ -14,8 +14,11 @@ def create_quote(request):
     company_options = Company.objects.all().values("name")
     company_options = [d["name"] for d in company_options]
 
-    product_options = Product.objects.all().values("pn")
-    product_options = [d["pn"] for d in product_options]
+    product_options = []
+
+    products = Product.objects.all().values_list("pn", "title")
+    for product in products:
+        product_options.append(f"{product[0]}: {product[1]}")
 
     return render(
         request,
