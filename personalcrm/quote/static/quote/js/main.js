@@ -7,32 +7,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   $('.datepicker').datepicker();
 
-  $('.product-options').change((e) => {
-    let tr = e.target.closest('tr');
-    updateProduct(tr);
-  });
-
-  $('.price, .qty, .discount').keyup((e) => {
-    let tr = e.target.closest('tr');
-    updateAmount(tr);
-  });
-
-  $('#shipping-input, #tax-input').keyup(() => {
-    updateTotal();
-  });
-
-  $('.deleteRowButton').click((e) => {
-    let tr = e.target.closest('tr');
-    deleteRow(tr);
-  });
-
-  $('.hiddenCheck').click((e) => {
-    let checkbox = e.target;
-    let tr = e.target.closest('tr');
-    hideRow(tr, checkbox);
-  });
+  rowFieldsFunction();
 
   $('#new-item').click(() => addNewLine());
+
+  rowNumberUpdate();
+
+  quote_row = $('#initial-row').prop('outerHTML');
 
   console.log('Document loaded!');
 });
@@ -53,6 +34,33 @@ function updateTotal() {
   $('#shipping-amount').html(shipping);
   $('#tax-amount').html(tax_amount);
   $('#total-amount').html(total);
+}
+
+function rowFieldsFunction() {
+  $('.product-options').change((e) => {
+    let tr = e.target.closest('tr');
+    updateProduct(tr);
+  });
+
+  $('.price, .qty, .discount').keyup((e) => {
+    let tr = e.target.closest('tr');
+    updateAmount(tr);
+  });
+
+  $('#shipping-input, #tax-input').keyup(() => {
+    updateTotal();
+  });
+
+  $('.deleteRowButton').click((e) => {
+    let tr = e.target.closest('tr');
+    deleteRow(tr);
+    rowNumberUpdate();
+  });
+
+  $('.hidden-field').change((e) => {
+    let tr = e.target.closest('tr');
+    hideRow(tr);
+  });
 }
 
 function updateProduct(tr) {
@@ -85,8 +93,8 @@ function deleteRow(tr) {
   $(tr).remove();
 }
 
-function hideRow(tr, checkbox) {
-  if ($(checkbox).is(':checked')) {
+function hideRow(tr) {
+  if ($(tr).find('.hidden-field').val() == 'True') {
     $(tr).css('background-color', 'gainsboro');
   } else {
     $(tr).css('background-color', 'white');
@@ -101,89 +109,19 @@ function addNewLine() {
     number = 1;
   }
 
-  fetch('request-product-options')
-    .then((response) => response.json())
-    .then((data) => {
-      product_options = data['product_options'];
-      let products = '';
+  let line = quote_row;
 
-      for (key in product_options) {
-        products = products.concat(`<option>${product_options[key]}</option>`);
-      }
+  $('tbody').append(line);
 
-      let line = newLine(products);
+  rowNumberUpdate();
 
-      $('tbody').append(line);
-
-      $('.price, .qty, .discount').keyup((event) => {
-        let tr = event.target.closest('tr');
-        updateAmount(tr);
-      });
-
-      $('.deleteRowButton').click((event) => {
-        let tr = event.target.closest('tr');
-        deleteRow(tr);
-      });
-
-      $('.hiddenCheck').click((event) => {
-        let checkbox = event.target;
-        let tr = event.target.closest('tr');
-        hideRow(tr, checkbox);
-      });
-
-      $('.product-select').change((e) => {
-        let tr = e.target.closest('tr');
-        updateProduct(tr);
-      });
-    });
+  rowFieldsFunction();
 }
 
-function newLine(products) {
-  let line =
-    '<tr>' +
-    '                        <th scope="row">' +
-    number +
-    '</th>' +
-    '                        <td class="description-column">' +
-    '                            <div class="form-group">' +
-    '                                <select class="form-select product-select">' +
-    '                                <option selected>Select product</option>' +
-    `                                ${products}` +
-    '                                </select>' +
-    '                                <label class="product-title"></label>' +
-    '                                <label class="product-brand"></label>' +
-    '                                <textarea class="form-control product-description" name="product-description" id="" cols="30" rows="5"></textarea>' +
-    '                            </div>' +
-    '                        </td>' +
-    '                        <td class="qty-column">' +
-    '                            <div class="form-group">' +
-    '                                <input type="number" class="form-control qty" placeholder="Qty" min="0" step="1">' +
-    '                            </div>' +
-    '                        </td>' +
-    '                        <td class="price-column">' +
-    '                            <div class="form-group">' +
-    '                                <input type="number" class="form-control price" min="0.01" placeholder="Price">' +
-    '                            </div>' +
-    '                        </td>' +
-    '                        <td class="discount-column">' +
-    '                            <div class="form-group">' +
-    '                                <input type="number" class="form-control discount" id="discount" placeholder="%" min="0.01" max="99.99">' +
-    '                            </div>' +
-    '                        </td>' +
-    '                        <td class="amount-column">' +
-    '                            <div class="amount"></div>' +
-    '                        </td>' +
-    '                        <td class="hiddenCheck-column">' +
-    '                            <div class="form-check">' +
-    '                                <input class="form-check-input hiddenCheck" type="checkbox" value="">' +
-    '                            </div>' +
-    '                        </td>' +
-    '                        <td class="deleteRow-column">' +
-    '                            <div class="form-check">' +
-    '                                <button class="btn btn-danger deleteRowButton" type="button">x</button>' +
-    '                            </div>' +
-    '                        </td>' +
-    '                    </tr>';
+function rowNumberUpdate() {
+  rows = $('.row-number');
 
-  return line;
+  for (let i = 0; i < rows.length; i++) {
+    $(rows[i]).html(i + 1);
+  }
 }

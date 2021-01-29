@@ -2,38 +2,50 @@
 
 {% block body %}
     <h1>Create Quote</h1>
-    <form id="new-quote-form" action="" method="post">
-        <div id="general-info" class="form-control container-fluid">
-            <!-- <div id="general-first"> -->
-                <div class="form-group">
-                    <label class="form-label" for="companyOptions">Customer:</label>
-                    <input class="form-control" list="companyOptions" placeholder="Type customer">
-                    <datalist id="companyOptions">
-                        {% for company in company_options %}
-                        <option>{{ company }}</option>
-                        {% endfor %}
-                    </datalist>
-                </div>
-                <div class="form-group">
-                    <label for="reference">Reference #:</label>
-                    <input type="text" class="form-control" id="reference" placeholder="">
-                </div>
-            <!-- </div> -->
-            <!-- <div id="general-second"> -->
-                <div class="form-group">
-                    <label for="reference">Date:</label>
-                    <div class="input-group date" data-provide="datepicker">
-                        <input type="text" class="form-control">
-                        <div class="input-group-addon">
-                            <span class="glyphicon glyphicon-th"></span>
+    <form id="new-quote-form" action="{% url 'create-quote' %}" method="post">{% csrf_token %}
+        <div id="general-info" class="form-control">
+            <div id="generalInfo-flex">
+                <div id="general-left">
+                    <div class="form-group">
+                        <label class="form-label" for="companyOptions">Customer:</label>
+                        <input class="form-control" name="company" list="companyOptions" placeholder="Type customer" required >
+                        <datalist id="companyOptions">
+                            {% for company in company_options %}
+                            <option>{{ company }}</option>
+                            {% endfor %}
+                        </datalist>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="contactOptions">Contact:</label>
+                        <input class="form-control" name="contact" list="contactOptions" placeholder="Type contact">
+                        <datalist id="contactOptions">
+                            <option>Contacts List</option>
+                            <!-- {% for company in company_options %}
+                            <option>{{ contact }}</option>
+                            {% endfor %} -->
+                        </datalist>
+                    </div>
+                </div> 
+                <div id="general-right">
+                    <div class="form-group">
+                        <label for="reference">Reference #:</label>
+                        <input type="text" class="form-control" name="reference" id="reference" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="reference">Date:</label>
+                        <div class="input-group date" data-provide="datepicker">
+                            <input type="text" class="form-control" name="date" required>
+                            <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-th"></span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="description">Description:</label>
-                    <input type="text" class="form-control" id="description" placeholder="">
-                </div>
-            <!-- </div> -->
+                </div>   
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <input type="text" class="form-control" name="description" id="description" placeholder="">
+            </div>
         </div>
         <div class="product-info">
             <table class="table" id="form-table">
@@ -50,10 +62,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
+                    <tr id="initial-row">
+                        <th class="row-number" scope="row">1</th>
                         <td class="description-column">
-                            <input class="form-control product-options" list="product-options" id="productDataList" placeholder="Product">
+                            <input class="form-control product-options" name="product-options"  list="product-options" id="productDataList" placeholder="Product">
                                 <datalist id="product-options">
                                     {% for product in product_options %}
                                     <option>{{ product }}</option>
@@ -61,32 +73,32 @@
                                 </datalist>
                                 <h6 class="product-title"></h6>
                                 <p class="product-brand"></p>
-                                <textarea class="form-control product-description" name="product-description" id="" cols="30" rows="5"></textarea>
+                                <textarea class="form-control product-description" name="custom-product-description" cols="30" rows="5"></textarea>
                             </div>
                         </td>
                         <td class="qty-column">
                             <div class="form-group">
-                                <input type="number" class="form-control qty" placeholder="Qty" min="0" step="1">
+                                <input type="number" class="form-control qty" name="qty" placeholder="Qty" min="0" step="1">
                             </div>
                         </td>
                         <td class="price-column">
                             <div class="form-group">
-                                <input type="number" class="form-control price" min="0.01" placeholder="Price">
+                                <input type="number" class="form-control price" name="price" min="0.01" placeholder="Price">
                             </div>
                         </td>
                         <td class="discount-column">
                             <div class="form-group">
-                                <input type="number" class="form-control discount" id="discount" placeholder="%" min="0.01" max="99.99">
+                                <input type="number" class="form-control discount" name="discount" id="discount" placeholder="%" min="0.01" max="99.99">
                             </div>
-                            <!-- <div>%</div> -->
                         </td>
                         <td class="amount-column">
                             <div class="amount"></div>
                         </td>
-                        <td class="hiddenCheck-column">
-                            <div class="form-check">
-                                <input class="form-check-input hiddenCheck" type="checkbox" value="">
-                            </div>
+                        <td class="hidden-column">
+                            <select class="form-select hidden-field" name="hidden">                            
+                                <option value="True">Yes</option>
+                                <option value="False" selected>No</option>                        
+                            </select>
                         </td>
                         <td class="deleteRow-column">
                             <div class="form-check">
@@ -119,7 +131,7 @@
                         Shipping Charges
                     </div>
                     <div class="form-group">
-                        <input type="number" id="shipping-input" class="form-control shipping" min="0.01">
+                        <input type="number" id="shipping-input" name="shipping" class="form-control shipping" min="0.01">
                     </div>
                     <div class="total-amount" id="shipping-amount">
                         0.00
@@ -130,7 +142,7 @@
                         Tax
                     </div>
                     <div class="form-group">
-                        <input type="number" class="form-control tax" id="tax-input" placeholder="%" min="0.01" max="99.99">
+                        <input type="number" class="form-control tax"  name="tax" id="tax-input" placeholder="%" min="0.01" max="99.99">
                     </div>
                     <div class="total-amount" id="tax-amount">
                         0.00
