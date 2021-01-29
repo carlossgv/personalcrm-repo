@@ -1,5 +1,6 @@
-from django.http.response import JsonResponse
+from django.http.response import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
+from django.urls import reverse
 from .models import Product, User, Company, Contact
 from .utils import createProduct, createCompany, createQuote
 
@@ -11,20 +12,26 @@ def home(request):
 
 def create_quote(request):
 
-    company_options = Company.objects.all().values("name")
-    company_options = [d["name"] for d in company_options]
+    if request.method == "GET":
 
-    product_options = []
+        company_options = Company.objects.all().values_list("name", flat=True)
 
-    products = Product.objects.all().values_list("pn", "title")
-    for product in products:
-        product_options.append(f"{product[0]}: {product[1]}")
+        product_options = []
 
-    return render(
-        request,
-        "quote/create-quote.html",
-        {"company_options": company_options, "product_options": product_options},
-    )
+        products = Product.objects.all().values_list("pn", "title")
+        for product in products:
+            product_options.append(f"{product[0]}: {product[1]}")
+
+        return render(
+            request,
+            "quote/create-quote.html",
+            {"company_options": company_options, "product_options": product_options},
+        )
+    elif request.method == "POST":
+
+        print(request.POST)
+
+        return HttpResponseRedirect(reverse("create-quote"))
 
 
 def request_product_options(request):

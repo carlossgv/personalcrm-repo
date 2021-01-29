@@ -6,6 +6,13 @@ body {
   margin-bottom: 2rem;
 }
 
+.form-label {
+  margin-bottom: 0;
+}
+
+#generalInfo-flex {
+}
+
 #termsAndTotals {
   display: flex;
 }
