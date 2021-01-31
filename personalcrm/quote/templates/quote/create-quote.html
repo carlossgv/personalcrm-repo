@@ -11,7 +11,7 @@
                         <input class="form-control" name="company" list="companyOptions" placeholder="Type customer" required >
                         <datalist id="companyOptions">
                             {% for company in company_options %}
-                            <option>{{ company }}</option>
+                                <option>{{ company.id }}: {{ company.info }}</option>
                             {% endfor %}
                         </datalist>
                     </div>
@@ -19,10 +19,11 @@
                         <label class="form-label" for="contactOptions">Contact:</label>
                         <input class="form-control" name="contact" list="contactOptions" placeholder="Type contact">
                         <datalist id="contactOptions">
-                            <option>Contacts List</option>
-                            <!-- {% for company in company_options %}
-                            <option>{{ contact }}</option>
-                            {% endfor %} -->
+                            {% for contact in contact_options %}
+                                <option>
+                                    {{ contact.id }}: {{ contact.info }}
+                                </option>
+                            {% endfor %}
                         </datalist>
                     </div>
                 </div> 
@@ -33,12 +34,7 @@
                     </div>
                     <div class="form-group">
                         <label for="reference">Date:</label>
-                        <div class="input-group date" data-provide="datepicker">
-                            <input type="text" class="form-control" name="date" required>
-                            <div class="input-group-addon">
-                                <span class="glyphicon glyphicon-th"></span>
-                            </div>
-                        </div>
+                        <input data-provide="datepicker" class="form-control datepicker" name="date" required>
                     </div>
                 </div>   
             </div>
@@ -65,10 +61,10 @@
                     <tr id="initial-row">
                         <th class="row-number" scope="row">1</th>
                         <td class="description-column">
-                            <input class="form-control product-options" name="product-options"  list="product-options" id="productDataList" placeholder="Product">
+                            <input class="product-options" name="product-options"  list="product-options" id="productDataList" placeholder="Product">
                                 <datalist id="product-options">
                                     {% for product in product_options %}
-                                    <option>{{ product }}</option>
+                                    <option>{{ product.info }} - {{ product.id }}</option>
                                     {% endfor %}
                                 </datalist>
                                 <h6 class="product-title"></h6>
@@ -83,12 +79,12 @@
                         </td>
                         <td class="price-column">
                             <div class="form-group">
-                                <input type="number" class="form-control price" name="price" min="0.01" placeholder="Price">
+                                <input type="number" class="form-control price" name="price" min="0.01" step="0.01" placeholder="Price">
                             </div>
                         </td>
                         <td class="discount-column">
                             <div class="form-group">
-                                <input type="number" class="form-control discount" name="discount" id="discount" placeholder="%" min="0.01" max="99.99">
+                                <input type="number" class="form-control discount" name="discount" id="discount" placeholder="%" min="0.01" max="99.99" step="0.01">
                             </div>
                         </td>
                         <td class="amount-column">
@@ -131,7 +127,7 @@
                         Shipping Charges
                     </div>
                     <div class="form-group">
-                        <input type="number" id="shipping-input" name="shipping" class="form-control shipping" min="0.01">
+                        <input type="number" id="shipping-input" name="shipping" class="form-control shipping" min="0.01" step="0.01">
                     </div>
                     <div class="total-amount" id="shipping-amount">
                         0.00
@@ -142,7 +138,7 @@
                         Tax
                     </div>
                     <div class="form-group">
-                        <input type="number" class="form-control tax"  name="tax" id="tax-input" placeholder="%" min="0.01" max="99.99">
+                        <input type="number" class="form-control tax"  name="tax" id="tax-input" placeholder="%" min="0.01" max="99.99" step="0.01">
                     </div>
                     <div class="total-amount" id="tax-amount">
                         0.00
