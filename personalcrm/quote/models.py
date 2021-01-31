@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, User
-from django.db.models.deletion import PROTECT
+from django.db.models.deletion import CASCADE, PROTECT
 
 
 class User(AbstractUser):
@@ -17,8 +17,11 @@ class Brand(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
 
+    class Meta:
+        verbose_name_plural = "Categories"
+
     def __str__(self) -> str:
-        return f"{self.name}"
+        return f"{self.pk}: {self.name}"
 
 
 class Product(models.Model):
@@ -96,7 +99,7 @@ class Contact(models.Model):
     edit_date = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
-        return f"{self.first_name} {self.last_name} | {self.company}"
+        return f"{self.first_name} {self.last_name} | {self.company.name}"
 
 
 class Quote(models.Model):
@@ -113,9 +116,21 @@ class Quote(models.Model):
         Contact, on_delete=PROTECT, related_name="contact_quoted", blank=True, null=True
     )
     terms = models.TextField(blank=True, null=True)
+    shipping = models.FloatField(blank=True, null=True)
+    tax = models.FloatField(blank=True, null=True)
     internal_note = models.TextField(blank=True, null=True)
 
     def __str__(self) -> str:
         return (
             f"{self.pk} | {self.creator} | {self.reference} | {self.short_description}"
         )
+
+
+class QuotedProduct(models.Model):
+    quote = models.ForeignKey(Quote, on_delete=CASCADE, related_name="original_quote")
+    product = models.ForeignKey(
+        Product, on_delete=PROTECT, related_name="original_product"
+    )
+    custom_description = models.TextField(blank=True, null=True)
+    price = models.FloatField(blank=True, null=True)
+    hidden = models.BooleanField(default=False)

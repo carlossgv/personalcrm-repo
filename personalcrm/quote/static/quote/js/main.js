@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     new_quote_button.click(() => (location.href = 'create-quote'));
   }
 
-  $('.datepicker').datepicker();
+  $('.datepicker').datepicker().datepicker('setDate', new Date());
 
   rowFieldsFunction();
 
@@ -18,22 +18,50 @@ document.addEventListener('DOMContentLoaded', function () {
   console.log('Document loaded!');
 });
 
+// !===========================================================
+
+// TODO Implemetn accounting.js to format columns
+function formatColumns() {}
+
+function updateAmount(tr) {
+  let qty = $(tr).find('.qty').val();
+  let price = $(tr).find('.price').val();
+  let discount = $(tr).find('.discount').val();
+
+  let amount = (qty * price * (100 - discount)) / 100;
+
+  $(tr)
+    .find('.amount')
+    .html(accounting.formatMoney(amount, { precision: 0 }));
+  updateTotal();
+}
+
 function updateTotal() {
   let subtotal = 0;
   let amountArray = $('.amount');
   for (let i = 0; i < amountArray.length; i++) {
-    subtotal = subtotal + parseFloat(amountArray[i]['innerHTML']);
+    subtotal = subtotal + accounting.unformat(amountArray[i]['innerHTML']);
   }
 
   let shipping = parseFloat($('#shipping-input').val());
+  if (isNaN(shipping)) {
+    shipping = 0;
+  }
   let tax = parseFloat($('#tax-input').val());
   let tax_amount = (subtotal + shipping) * tax * 0.01;
+  if (isNaN(tax_amount)) {
+    tax_amount = 0;
+  }
   let total = subtotal + shipping + tax_amount;
 
-  $('#subtotal-amount').html(subtotal);
-  $('#shipping-amount').html(shipping);
-  $('#tax-amount').html(tax_amount);
-  $('#total-amount').html(total);
+  $('#subtotal-amount').html(
+    accounting.formatMoney(subtotal, { precision: 0 })
+  );
+  $('#shipping-amount').html(
+    accounting.formatMoney(shipping, { precision: 0 })
+  );
+  $('#tax-amount').html(accounting.formatMoney(tax_amount, { precision: 0 }));
+  $('#total-amount').html(accounting.formatMoney(total, { precision: 0 }));
 }
 
 function rowFieldsFunction() {
@@ -68,7 +96,7 @@ function updateProduct(tr) {
 
   pn = pn.split(':')[0];
 
-  // TO DO: CATCH ERROR WHEN INPUT DOESNT MATCH SITE
+  // TODO: CATCH ERROR WHEN INPUT DOESNT MATCH SITE
   fetch(`product/${pn}`)
     .then((response) => response.json())
     .then((data) => {
@@ -76,17 +104,6 @@ function updateProduct(tr) {
       $(tr).find('.product-brand').html(`Brand: ${data['brand']}`);
       $(tr).find('.product-description').html(data['description']);
     });
-}
-
-function updateAmount(tr) {
-  let qty = $(tr).find('.qty').val();
-  let price = $(tr).find('.price').val();
-  let discount = $(tr).find('.discount').val();
-
-  let amount = (qty * price * (100 - discount)) / 100;
-
-  $(tr).find('.amount').html(amount);
-  updateTotal();
 }
 
 function deleteRow(tr) {
