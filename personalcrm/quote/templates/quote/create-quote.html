@@ -74,22 +74,23 @@
                         </td>
                         <td class="qty-column">
                             <div class="form-group">
-                                <input type="number" class="form-control qty" name="qty" placeholder="Qty" min="0" step="1">
+                                <input type="number" class="form-control qty" name="qty" placeholder="Qty" min="0" step="1" value="0">
                             </div>
                         </td>
                         <td class="price-column">
                             <div class="form-group">
-                                <input type="number" class="form-control price" name="price" min="0.01" step="0.01" placeholder="Price">
+                                <input type="number" class="form-control price" name="price" min="0" step="0.01" placeholder="Price" value="0">
                             </div>
                         </td>
                         <td class="discount-column">
                             <div class="form-group">
-                                <input type="number" class="form-control discount" name="discount" id="discount" placeholder="%" min="0.01" max="99.99" step="0.01">
+                                <input type="number" class="form-control discount" name="discount" id="discount" placeholder="%" min="0" max="99.99" step="0.01" value="0">
                             </div>
                         </td>
                         <td class="amount-column">
                             <div class="amount"></div>
                         </td>
+                        <!-- TODO Implement checkboxes for hidden attribute -->
                         <td class="hidden-column">
                             <select class="form-select hidden-field" name="hidden">                            
                                 <option value="True">Yes</option>
@@ -127,7 +128,7 @@
                         Shipping Charges
                     </div>
                     <div class="form-group">
-                        <input type="number" id="shipping-input" name="shipping" class="form-control shipping" min="0.01" step="0.01">
+                        <input type="number" id="shipping-input" name="shipping" class="form-control shipping" step="0.01" value="0">
                     </div>
                     <div class="total-amount" id="shipping-amount">
                         0.00
@@ -138,7 +139,7 @@
                         Tax
                     </div>
                     <div class="form-group">
-                        <input type="number" class="form-control tax"  name="tax" id="tax-input" placeholder="%" min="0.01" max="99.99" step="0.01">
+                        <input type="number" class="form-control tax"  name="tax" id="tax-input" placeholder="%" max="99.99" step="0.01" value="0">
                     </div>
                     <div class="total-amount" id="tax-amount">
                         0.00

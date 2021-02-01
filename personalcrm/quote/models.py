@@ -131,6 +131,11 @@ class QuotedProduct(models.Model):
     product = models.ForeignKey(
         Product, on_delete=PROTECT, related_name="original_product"
     )
-    custom_description = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    qty = models.IntegerField(blank=True, null=True)
     price = models.FloatField(blank=True, null=True)
+    discount = models.FloatField(blank=True, null=True)
     hidden = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return f"{self.quote.pk} | {self.quote.creator} | {self.quote.short_description} | {self.product}"

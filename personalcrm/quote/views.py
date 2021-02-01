@@ -30,8 +30,8 @@ def create_quote(request):
             )
 
         product_options = []
-        products = Product.objects.all()
-        for product in products:
+        products_list = Product.objects.all()
+        for product in products_list:
             product_options.append(
                 {"id": product.id, "info": f"{product.pn}: {product.title}"}
             )
@@ -50,14 +50,13 @@ def create_quote(request):
         data = request.POST
 
         # user = request.user
+        # TODO CHANGE USER TO CURRENT USER OR SELECT USER
         user = User.objects.get(pk=1)
-
-        print(user)
 
         company_id = data["company"].split(":")[0]
 
+        # TODO CATCH ERROR WHEN THERES NO USER ASSIGNED
         contact_id = data["contact"].split(":")[0]
-        print(contact_id)
 
         referente = data["reference"]
 
@@ -79,21 +78,52 @@ def create_quote(request):
             short_description=description,
             company=Company.objects.get(pk=company_id),
             contact=Contact.objects.get(pk=contact_id),
+            shipping=shipping,
             terms=terms,
             tax=tax,
             internal_note=internal_notes,
         )
 
+        # create quote
         quote.save()
-        print(quote.pk)
 
-        # for i in range(data["product_options"]):
-        #     product_pn = data["product_options"][i].split(":")[0]
-        #     product_decription = data["custom-product-description"][i]
-        #     qty = data["qty"][i]
-        #     price = data["price"][i]
-        #     discount = data["discount"][i]
-        #     hidden = data["hidden"][i]
+        quote = Quote.objects.all().order_by("-id")[0]
+        # print(quote)
+
+        # lists of each item's row
+        products_list = request.POST.getlist("product-options")
+        products_description_list = request.POST.getlist("custom-product-description")
+        qty_list = request.POST.getlist("qty")
+        price_list = request.POST.getlist("price")
+        discount_list = request.POST.getlist("discount")
+        hidden_list = request.POST.getlist("hidden")
+
+        # add products to quote
+        for i in range(len(products_list)):
+            product_pn = products_list[i].split(":")[0]
+            product_object = Product.objects.get(pn=product_pn)
+
+            # add products to quote
+            quote.products.add(product_object)
+
+            # convert hidden values
+            if hidden_list[i] == 'True':
+                hidden_list[i] = True
+            else:
+                hidden_list[i] = False
+
+            # add products particular info to quotedproducts
+            quoted_info = QuotedProduct(
+                quote = quote,
+                product = product_object,
+                description = products_description_list[i],
+                qty = qty_list[i],
+                price = price_list[i],
+                discount = discount_list[i],
+                hidden = hidden_list[i],
+            )
+
+            quoted_info.save()
 
         return HttpResponseRedirect(reverse("create-quote"))
 
