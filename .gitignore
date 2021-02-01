@@ -12,7 +12,7 @@ tests/coverage_html/
 tests/.coverage
 build/
 tests/report/
-personalcrm/quote/csv files for
+personalcrm/csv-files-for-db
 personalcrm/db.sqlite
 personalcrm/TODOLIST.txt
 personalcrm/db.sqlite3
