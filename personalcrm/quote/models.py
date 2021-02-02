@@ -120,6 +120,15 @@ class Quote(models.Model):
     tax = models.FloatField(blank=True, null=True)
     internal_note = models.TextField(blank=True, null=True)
 
+    def serialize(self):
+        return {
+            "id": self.pk,
+            "customer": self.company.name,
+            "description": self.short_description,
+            "reference": self.reference,
+            "creator": self.creator.username,
+        }
+
     def __str__(self) -> str:
         return (
             f"{self.pk} | {self.creator} | {self.reference} | {self.short_description}"
