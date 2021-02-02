@@ -2,7 +2,7 @@ from django.http.response import HttpResponse, HttpResponseRedirect, JsonRespons
 from django.shortcuts import render
 from django.urls import reverse
 from .models import Product, User, Company, Contact, Quote, QuotedProduct
-from .utils import create_or_edit_quote
+from .utils import create_or_edit_quote, form_options
 
 # Create your views here.
 def home(request):
@@ -44,7 +44,9 @@ def edit_quote(request, quote_id):
 
         print(edit)
 
-        return HttpResponseRedirect(reverse("edit-quote", kwargs={'quote_id': quote_id}))
+        return HttpResponseRedirect(
+            reverse("edit-quote", kwargs={"quote_id": quote_id})
+        )
 
 
 def create_quote(request):
@@ -90,33 +92,3 @@ def get_product_info(request, pn):
     product = Product.objects.get(pn=pn)
 
     return JsonResponse(product.serialize(), safe=False)
-
-
-def form_options():
-    company_options = []
-    companies = Company.objects.all()
-    for company in companies:
-        company_options.append({"id": company.id, "info": company.name})
-
-    contact_options = []
-    contacts = Contact.objects.all()
-    for contact in contacts:
-        contact_options.append(
-            {
-                "id": contact.id,
-                "info": f"{contact.first_name} {contact.last_name} | {contact.company.name} | {contact.email}",
-            }
-        )
-
-    product_options = []
-    products_list = Product.objects.all()
-    for product in products_list:
-        product_options.append(
-            {"id": product.id, "info": f"{product.pn}: {product.title}"}
-        )
-
-    return {
-        "company_options": company_options,
-        "contact_options": contact_options,
-        "product_options": product_options,
-    }
