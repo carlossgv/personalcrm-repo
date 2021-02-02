@@ -15,12 +15,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
   quote_row = $('#initial-row').prop('outerHTML');
 
-  console.log('Document loaded!');
+  // Update rows when editing quotes
+  $.each($('.product-row'), (index, row) => {
+    updateAmount(row);
+  });
 });
 
 // !===========================================================
 
-// TODO Implemetn accounting.js to format columns
+// TODO Implement accounting.js to format columns
 function formatColumns() {}
 
 function updateAmount(tr) {
