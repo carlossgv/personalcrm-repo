@@ -10,41 +10,45 @@ def home(request):
     return render(request, "quote/quote_index.html")
 
 
+def edit_quote(request, quote_id):
+
+    if request.method == "GET":
+
+        data = form_options()
+
+        quote = Quote.objects.get(pk=quote_id)
+        products = QuotedProduct.objects.filter(quote=quote)
+
+        return render(
+            request,
+            "quote/edit-quote.html",
+            {
+                "company_options": data["company_options"],
+                "contact_options": data["contact_options"],
+                "product_options": data["product_options"],
+                # "quote_id": quote_id,
+                "quote": quote,
+                "products": products,
+            },
+        )
+
+
 def create_quote(request):
 
     if request.method == "GET":
 
-        company_options = []
-        companies = Company.objects.all()
-        for company in companies:
-            company_options.append({"id": company.id, "info": company.name})
-
-        contact_options = []
-        contacts = Contact.objects.all()
-        for contact in contacts:
-            contact_options.append(
-                {
-                    "id": contact.id,
-                    "info": f"{contact.first_name} {contact.last_name} | {contact.company.name} | {contact.email}",
-                }
-            )
-
-        product_options = []
-        products_list = Product.objects.all()
-        for product in products_list:
-            product_options.append(
-                {"id": product.id, "info": f"{product.pn}: {product.title}"}
-            )
+        data = form_options()
 
         return render(
             request,
             "quote/create-quote.html",
             {
-                "company_options": company_options,
-                "contact_options": contact_options,
-                "product_options": product_options,
+                "company_options": data["company_options"],
+                "contact_options": data["contact_options"],
+                "product_options": data["product_options"],
             },
         )
+
     elif request.method == "POST":
 
         data = request.POST
@@ -107,25 +111,25 @@ def create_quote(request):
             quote.products.add(product_object)
 
             # convert hidden values
-            if hidden_list[i] == 'True':
+            if hidden_list[i] == "True":
                 hidden_list[i] = True
             else:
                 hidden_list[i] = False
 
             # add products particular info to quotedproducts
             quoted_info = QuotedProduct(
-                quote = quote,
-                product = product_object,
-                description = products_description_list[i],
-                qty = qty_list[i],
-                price = price_list[i],
-                discount = discount_list[i],
-                hidden = hidden_list[i],
+                quote=quote,
+                product=product_object,
+                description=products_description_list[i],
+                qty=qty_list[i],
+                price=price_list[i],
+                discount=discount_list[i],
+                hidden=hidden_list[i],
             )
 
             quoted_info.save()
 
-        return HttpResponseRedirect(reverse("create-quote"))
+            return HttpResponseRedirect(reverse("quote"))
 
 
 def request_product_options(request):
@@ -141,3 +145,33 @@ def get_product_info(request, pn):
     product = Product.objects.get(pn=pn)
 
     return JsonResponse(product.serialize(), safe=False)
+
+
+def form_options():
+    company_options = []
+    companies = Company.objects.all()
+    for company in companies:
+        company_options.append({"id": company.id, "info": company.name})
+
+    contact_options = []
+    contacts = Contact.objects.all()
+    for contact in contacts:
+        contact_options.append(
+            {
+                "id": contact.id,
+                "info": f"{contact.first_name} {contact.last_name} | {contact.company.name} | {contact.email}",
+            }
+        )
+
+    product_options = []
+    products_list = Product.objects.all()
+    for product in products_list:
+        product_options.append(
+            {"id": product.id, "info": f"{product.pn}: {product.title}"}
+        )
+
+    return {
+        "company_options": company_options,
+        "contact_options": contact_options,
+        "product_options": product_options,
+    }
