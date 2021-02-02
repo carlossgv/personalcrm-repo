@@ -8,7 +8,7 @@ urlpatterns = [
     # JSON routes
     path(
         "request-product-options",
-        views.request_product_options,
+        views.get_product_options,
         name="request-product-options",
     ),
     path(
@@ -16,4 +16,5 @@ urlpatterns = [
         views.get_product_info,
         name="product-info",
     ),
+    path("quote-index", views.get_quote_index, name="quote-index"),
 ]

@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
   $.each($('.product-row'), (index, row) => {
     updateAmount(row);
   });
+  console.log('document loaded!');
 });
 
 // !===========================================================
@@ -92,8 +93,6 @@ function rowFieldsFunction() {
     let tr = e.target.closest('tr');
     hideRow(tr);
   });
-
-  console.log(window.location.pathname);
 }
 
 function updateProduct(tr) {

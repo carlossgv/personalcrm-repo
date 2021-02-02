@@ -7,7 +7,7 @@ from .utils import create_or_edit_quote, form_options
 # Create your views here.
 def home(request):
 
-    return render(request, "quote/quote_index.html")
+    return render(request, "quote/index.html")
 
 
 # TODO !! MAJOR CHANGE: IMPLEMENT DJANGO FORMS INSTEAD OF HTML FORMS
@@ -76,10 +76,10 @@ def create_quote(request):
 
         create = create_or_edit_quote(data, user, "create")
         print(create)
-        return HttpResponseRedirect(reverse("create-quote"))
+        return HttpResponseRedirect(reverse("quote-home"))
 
 
-def request_product_options(request):
+def get_product_options(request):
 
     product_options = Product.objects.all().values("pn")
     product_options = [d["pn"] for d in product_options]
@@ -92,3 +92,10 @@ def get_product_info(request, pn):
     product = Product.objects.get(pn=pn)
 
     return JsonResponse(product.serialize(), safe=False)
+
+
+def get_quote_index(request):
+
+    quotes = Quote.objects.all()
+
+    return JsonResponse([quote.serialize() for quote in quotes], safe=False)

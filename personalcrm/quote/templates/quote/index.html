@@ -1,0 +1,22 @@
+{% extends 'quote/layout.html' %}
+
+{% block body %}
+    <h1>Quote Index</h1>
+    <button type="button "id="new_quote_button" class="btn btn-primary">New Quote</button>
+    <table 
+        data-toggle="table"
+        data-url="quote-index"
+        data-pagination="true"
+        data-search="true">
+        <thead>
+          <tr>
+            <th data-field="id" data-sortable="true">ID</th>
+            <th data-field="customer" data-sortable="true">Customer</th>
+            <th data-field="description">Description</th>
+            <th data-field="reference">Reference</th>
+            <th data-field="creator">Creator</th>
+          </tr>
+        </thead>
+      </table>
+    
+{% endblock body %}
