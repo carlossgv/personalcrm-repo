@@ -2,7 +2,7 @@
 
 {% block body %}
     <h1>Edit Quote #{{ quote.pk }}</h1>
-    <form id="new-quote-form" action="{% url 'create-quote' %}" method="post">{% csrf_token %}
+    <form id="new-quote-form" action="{% url 'edit-quote' quote_id=quote.pk %}" method="post">{% csrf_token %}
         <div id="general-info" class="form-control">
             <div id="generalInfo-flex">
                 <div id="general-left">
@@ -93,9 +93,14 @@
                         </td>
                         <!-- TODO Implement checkboxes for hidden attribute -->
                         <td class="hidden-column">
-                            <select class="form-select hidden-field" name="hidden">                            
+                            <select class="form-select hidden-field" name="hidden" value="Yes">
+                            {% if row.hidden %}
+                                <option value="True" selected>Yes</option>
+                                <option value="False">No</option>     
+                            {% else %} 
                                 <option value="True">Yes</option>
                                 <option value="False" selected>No</option>                        
+                            {% endif %}
                             </select>
                         </td>
                         <td class="deleteRow-column">
@@ -164,6 +169,6 @@
             </div>
         </div>
         <button type="button" class="btn btn-outline-primary">Preview Quote</button>
-        <button type="submit" class="btn btn-primary">Create Quote</button>
+        <button type="submit" class="btn btn-primary">Edit Quote</button>
     </form>
 {% endblock body %}
