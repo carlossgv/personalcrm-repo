@@ -2,7 +2,7 @@ from django.http.response import HttpResponse, HttpResponseRedirect, JsonRespons
 from django.shortcuts import render
 from django.urls import reverse
 from .models import Product, User, Company, Contact, Quote, QuotedProduct
-from .utils import create_or_edit_quote, form_options
+from .utils import create_or_edit_quote
 
 # Create your views here.
 def home(request):
@@ -14,6 +14,7 @@ def home(request):
 
 
 def edit_quote(request, quote_id):
+    print("ENTERED EDIT GET")
     if request.method == "GET":
 
         data = form_options()
@@ -34,19 +35,20 @@ def edit_quote(request, quote_id):
         )
 
     elif request.method == "POST":
+        print("ENTERED POST EDIT")
         # user = request.user
         # TODO CHANGE USER TO CURRENT USER OR SELECT USER
         user = User.objects.get(pk=1)
         data = request.POST
+        edit = create_or_edit_quote(data, user, "edit", quote_id)
 
-        create_or_edit_quote(data, user, "edit", quote_id)
+        print(edit)
 
-        return HttpResponseRedirect(
-            reverse("edit-quote", kwargs={"quote_id": quote_id})
-        )
+        return HttpResponseRedirect(reverse("edit-quote", kwargs={'quote_id': quote_id}))
 
 
 def create_quote(request):
+
     if request.method == "GET":
 
         data = form_options()
@@ -62,18 +64,21 @@ def create_quote(request):
         )
 
     elif request.method == "POST":
+        print("ENTERED POST CREATE")
+
         data = request.POST
 
         # user = request.user
         # TODO CHANGE USER TO CURRENT USER OR SELECT USER
         user = User.objects.get(pk=1)
 
-        create_or_edit_quote(data, user, "create")
-
+        create = create_or_edit_quote(data, user, "create")
+        print(create)
         return HttpResponseRedirect(reverse("create-quote"))
 
 
 def request_product_options(request):
+
     product_options = Product.objects.all().values("pn")
     product_options = [d["pn"] for d in product_options]
 
@@ -81,6 +86,37 @@ def request_product_options(request):
 
 
 def get_product_info(request, pn):
+
     product = Product.objects.get(pn=pn)
 
     return JsonResponse(product.serialize(), safe=False)
+
+
+def form_options():
+    company_options = []
+    companies = Company.objects.all()
+    for company in companies:
+        company_options.append({"id": company.id, "info": company.name})
+
+    contact_options = []
+    contacts = Contact.objects.all()
+    for contact in contacts:
+        contact_options.append(
+            {
+                "id": contact.id,
+                "info": f"{contact.first_name} {contact.last_name} | {contact.company.name} | {contact.email}",
+            }
+        )
+
+    product_options = []
+    products_list = Product.objects.all()
+    for product in products_list:
+        product_options.append(
+            {"id": product.id, "info": f"{product.pn}: {product.title}"}
+        )
+
+    return {
+        "company_options": company_options,
+        "contact_options": contact_options,
+        "product_options": product_options,
+    }

@@ -97,31 +97,42 @@ def create_or_edit_quote(data, user, method, quote_id=""):
         return f"quote {quote_id} edited"
 
 
-def form_options():
-    company_options = []
-    companies = Company.objects.all()
-    for company in companies:
-        company_options.append({"id": company.id, "info": company.name})
+def createProduct(pn, creator, editor, description="", list_price="", multiplier=""):
 
-    contact_options = []
-    contacts = Contact.objects.all()
-    for contact in contacts:
-        contact_options.append(
-            {
-                "id": contact.id,
-                "info": f"{contact.first_name} {contact.last_name} | {contact.company.name} | {contact.email}",
-            }
-        )
+    product = Product(
+        pn=pn,
+        description=description,
+        list_price=list_price,
+        multiplier=multiplier,
+        creator=creator,
+        editor=editor,
+    )
+    return product
 
-    product_options = []
-    products_list = Product.objects.all()
-    for product in products_list:
-        product_options.append(
-            {"id": product.id, "info": f"{product.pn}: {product.title}"}
-        )
 
-    return {
-        "company_options": company_options,
-        "contact_options": contact_options,
-        "product_options": product_options,
-    }
+def createCompany(
+    name,
+    creator,
+    editor,
+    email="",
+    phone="",
+    mobile="",
+    category="",
+    address="",
+    city="",
+    country="",
+):
+
+    company = Company(
+        name=name,
+        creator=creator,
+        editor=editor,
+        email=email,
+        phone=phone,
+        mobile=mobile,
+        category=category,
+        address=address,
+        city=city,
+        country=country,
+    )
+    return company
