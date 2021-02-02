@@ -92,6 +92,8 @@ function rowFieldsFunction() {
     let tr = e.target.closest('tr');
     hideRow(tr);
   });
+
+  console.log(window.location.pathname);
 }
 
 function updateProduct(tr) {
@@ -100,7 +102,14 @@ function updateProduct(tr) {
   pn = pn.split(':')[0];
 
   // TODO: CATCH ERROR WHEN INPUT DOESNT MATCH SITE
-  fetch(`product/${pn}`)
+  let product_url;
+  if (window.location.pathname.includes('edit-quote')) {
+    product_url = `../product/${pn}`;
+  } else if (window.location.pathname.includes('create-quote')) {
+    product_url = `product/${pn}`;
+  }
+
+  fetch(product_url)
     .then((response) => response.json())
     .then((data) => {
       $(tr).find('.product-title').html(data['title']);
@@ -130,6 +139,8 @@ function addNewLine() {
   }
 
   let line = quote_row;
+
+  // TODO: DELETE VALUES IN NEW LINE BEFORE APPENDING
 
   $('tbody').append(line);
 
