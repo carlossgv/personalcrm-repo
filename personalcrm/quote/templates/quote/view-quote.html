@@ -1,0 +1,94 @@
+
+{% extends 'quote/layout.html' %}
+{% load static %}
+
+
+{% block body %}
+
+<div class="company-info">
+    <div class="general-info-left">
+        <img src="{% static 'quote/img/logo/Logo-IFC.jpg' %}" alt="Logo-IFC" width="200px">
+    </div>
+    <div class="general-info-right">
+        <div>
+            <h6><strong>{{company.name}}</strong></h6>
+            <p class="company-details">RUT: {{company.legal_id}}</p>
+            <p class="company-details">{{company.address}}.</p>
+            <p class="company-details">{{company.city}}, {{company.state}}.</p>
+            <p class="company-details">T. {{company.phone}}</p>
+            <h4>Quote #{{ quote.pk }}</h4>
+
+        </div>
+    </div>
+</div>
+<div class="customer-info">
+    <div class="customer-info-left">
+        <div>
+            <p>Customer: <strong>{{quote.company.name}}</strong></p>
+            <p class="customer-details">RUT: {{quote.company.legal_id}}</p>
+            <p class="customer-details">Address: {{quote.company.address}}. {{quote.company.city}}, {{quote.company.state}}</p>
+            <p class="customer-details">Description: {{quote.description}} | Reference: {{quote.reference}}</p>
+        </div>
+    </div>
+    <div class="customer-info-right">
+        <div>
+            <p>Date: {{quote.creation_date}}</p>
+            <p class="customer-details">Sales Representative: {{quote.creator.first_name}} {{quote.creator.last_name}}</p>
+        </div>
+    </div>
+</div>
+<table class='table'>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Description</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Discount</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr class="product-row">
+            <th class="row-number"></th>
+            <td class="row-description">
+                <div>{{ product.title }}</div>
+                <div>{{ product.description|linebreaks }}</div>
+            </td>
+            <td class='qty'>{{product.qty}}</td>
+            <td class='price'>{{product.price}}</td>
+            <td class='discount'>{{product.discount}}</td>
+            <td>
+                <div class="amount"></div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class="terms-and-total">
+    <div class="terms">
+        <div><strong>Terms & Conditions:</strong></div>
+        <div>{{quote.terms|linebreaks}}</div>
+    </div>
+    <div class="totals">
+        <div class="totaling-div">
+            <div class="total-label">Sub-Total:</div>
+            <div class="total-amount" id="subtotal-amount"></div>
+        </div>
+        <div class="totaling-div">
+            <div class="total-label">Tax ({{quote.tax}}%):</div>
+            <div id="tax-input" hidden>{{quote.tax}}</div>
+            <div class="total-amount" id="tax-amount"></div>
+        </div>
+        <div class="totaling-div">
+            <div class="total-label">Total:</div>
+            <div class="total-amount" id="total-amount"></div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" type="text/css" href="{% static 'quote/css/view-quote.css' %}">
+
+{% endblock body %}
+
