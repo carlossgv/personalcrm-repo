@@ -1,7 +1,7 @@
 from django.http.response import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
-from .models import Product, User, Company, Contact, Quote, QuotedProduct
+from .models import Product, User, Company, Contact, Quote, QuotedProduct, UserCompany
 from .utils import create_or_edit_quote, form_options
 
 # Create your views here.
@@ -13,8 +13,23 @@ def home(request):
 # TODO !! MAJOR CHANGE: IMPLEMENT DJANGO FORMS INSTEAD OF HTML FORMS
 
 
+def view_quote(request, quote_id):
+    quote = Quote.objects.get(pk=quote_id)
+    products = QuotedProduct.objects.filter(quote=quote)
+    # TODO Pass selected logo (not hardcoded)
+    logo = "img"
+    company = UserCompany.objects.get(pk=1)
+
+
+
+    return render(
+        request,
+        "quote/view-quote.html",
+        {"quote": quote, "products": [product.serialize() for product in products], "company": company},
+    )
+
+
 def edit_quote(request, quote_id):
-    print("ENTERED EDIT GET")
     if request.method == "GET":
 
         data = form_options()
@@ -99,3 +114,9 @@ def get_quote_index(request):
     quotes = Quote.objects.all()
 
     return JsonResponse([quote.serialize() for quote in quotes], safe=False)
+
+def get_quote_products(request, quote_id):
+
+    products = QuotedProduct.objects.filter(quote = Quote.objects.get(pk=quote_id))
+
+    return JsonResponse([product.serialize() for product in products], safe=False)

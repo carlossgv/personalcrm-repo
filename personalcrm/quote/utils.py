@@ -10,7 +10,6 @@ def create_or_edit_quote(data, user, method, quote_id=""):
     date = data["date"]
     description = data["description"]
     terms = data["terms"]
-    shipping = data["shipping"]
     tax = data["tax"]
     internal_notes = data["internal-notes"]
 
@@ -27,10 +26,9 @@ def create_or_edit_quote(data, user, method, quote_id=""):
         quote = Quote(
             creator=user,
             reference=reference,
-            short_description=description,
+            description=description,
             company=Company.objects.get(pk=company_id),
             contact=Contact.objects.get(pk=contact_id),
-            shipping=shipping,
             terms=terms,
             tax=tax,
             internal_note=internal_notes,
@@ -45,10 +43,9 @@ def create_or_edit_quote(data, user, method, quote_id=""):
         quote.update(
             creator=user,
             reference=reference,
-            short_description=description,
+            description=description,
             company=Company.objects.get(pk=company_id),
             contact=Contact.objects.get(pk=contact_id),
-            shipping=shipping,
             terms=terms,
             tax=tax,
             internal_note=internal_notes,

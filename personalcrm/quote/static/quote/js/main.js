@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
+  if (window.location.pathname.includes('view-quote')) {
+    $('nav').remove();
+  }
+
   let new_quote_button = $('#new_quote_button');
 
   if (new_quote_button) {
@@ -19,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
   $.each($('.product-row'), (index, row) => {
     updateAmount(row);
   });
-  console.log('document loaded!');
+  console.log('document loaded');
 });
 
 // !===========================================================
@@ -28,9 +32,19 @@ document.addEventListener('DOMContentLoaded', function () {
 function formatColumns() {}
 
 function updateAmount(tr) {
-  let qty = $(tr).find('.qty').val();
-  let price = $(tr).find('.price').val();
-  let discount = $(tr).find('.discount').val();
+  let qty;
+  let price;
+  let discount;
+
+  if (window.location.pathname.includes('view-quote')) {
+    qty = $(tr).find('.qty').html();
+    price = $(tr).find('.price').html();
+    discount = $(tr).find('.discount').html();
+  } else {
+    qty = $(tr).find('.qty').val();
+    price = $(tr).find('.price').val();
+    discount = $(tr).find('.discount').val();
+  }
 
   let amount = (qty * price * (100 - discount)) / 100;
 
@@ -47,22 +61,23 @@ function updateTotal() {
     subtotal = subtotal + accounting.unformat(amountArray[i]['innerHTML']);
   }
 
-  let shipping = parseFloat($('#shipping-input').val());
-  if (isNaN(shipping)) {
-    shipping = 0;
+  let tax;
+
+  if (window.location.pathname.includes('view-quote')) {
+    tax = accounting.unformat($('#tax-input').html());
+  } else {
+    tax = parseFloat($('#tax-input').val());
   }
-  let tax = parseFloat($('#tax-input').val());
-  let tax_amount = (subtotal + shipping) * tax * 0.01;
+
+  let tax_amount = subtotal * tax * 0.01;
   if (isNaN(tax_amount)) {
     tax_amount = 0;
   }
-  let total = subtotal + shipping + tax_amount;
+
+  let total = subtotal + tax_amount;
 
   $('#subtotal-amount').html(
     accounting.formatMoney(subtotal, { precision: 0 })
-  );
-  $('#shipping-amount').html(
-    accounting.formatMoney(shipping, { precision: 0 })
   );
   $('#tax-amount').html(accounting.formatMoney(tax_amount, { precision: 0 }));
   $('#total-amount').html(accounting.formatMoney(total, { precision: 0 }));
@@ -79,7 +94,7 @@ function rowFieldsFunction() {
     updateAmount(tr);
   });
 
-  $('#shipping-input, #tax-input').keyup(() => {
+  $('#tax-input').keyup(() => {
     updateTotal();
   });
 

@@ -7,6 +7,16 @@ class User(AbstractUser):
     pass
 
 
+class UserCompany(models.Model):
+    user = models.ForeignKey(User, on_delete=PROTECT, related_name="user_company")
+    name = models.CharField(max_length=50)
+    legal_id = models.CharField(max_length=50)
+    address = models.CharField(max_length=100)
+    city = models.CharField(max_length=50)
+    state = models.CharField(max_length=50)
+    phone = models.CharField(max_length=50)
+
+
 class Brand(models.Model):
     name = models.CharField(max_length=50, unique=True)
 
@@ -60,7 +70,7 @@ class Product(models.Model):
 
 class Company(models.Model):
     name = models.CharField(max_length=20, unique=True)
-    id_number = models.CharField(max_length=10, null=True, unique=True)
+    legal_id = models.CharField(max_length=10, null=True, unique=True)
     email = models.EmailField(blank=True, null=True)
     phone = models.CharField(max_length=12, null=True)
     mobile = models.CharField(max_length=12, null=True)
@@ -69,6 +79,7 @@ class Company(models.Model):
     )
     address = models.CharField(max_length=100, null=True)
     city = models.CharField(max_length=50, null=True)
+    state = models.CharField(max_length=50, null=True)
     country = models.CharField(max_length=50, null=True)
     creator = models.ForeignKey(User, on_delete=PROTECT, related_name="company_creator")
     editor = models.ForeignKey(User, on_delete=PROTECT, related_name="company_editor")
@@ -105,7 +116,7 @@ class Contact(models.Model):
 class Quote(models.Model):
     creator = models.ForeignKey(User, on_delete=PROTECT, related_name="quote_creator")
     reference = models.CharField(max_length=50, blank=True, null=True)
-    short_description = models.CharField(max_length=50, blank=True, null=True)
+    description = models.CharField(max_length=50, blank=True, null=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     edit_date = models.DateTimeField(auto_now=True)
     products = models.ManyToManyField("Product", blank=True)
@@ -116,7 +127,6 @@ class Quote(models.Model):
         Contact, on_delete=PROTECT, related_name="contact_quoted", blank=True, null=True
     )
     terms = models.TextField(blank=True, null=True)
-    shipping = models.FloatField(blank=True, null=True)
     tax = models.FloatField(blank=True, null=True)
     internal_note = models.TextField(blank=True, null=True)
 
@@ -124,14 +134,14 @@ class Quote(models.Model):
         return {
             "id": self.pk,
             "customer": self.company.name,
-            "description": self.short_description,
+            "description": self.description,
             "reference": self.reference,
             "creator": self.creator.username,
         }
 
     def __str__(self) -> str:
         return (
-            f"{self.pk} | {self.creator} | {self.reference} | {self.short_description}"
+            f"{self.pk} | {self.creator} | {self.reference} | {self.description}"
         )
 
 
@@ -146,5 +156,17 @@ class QuotedProduct(models.Model):
     discount = models.FloatField(blank=True, null=True)
     hidden = models.BooleanField(default=False)
 
+    def serialize(self):
+        return {
+            "id": self.pk,
+            "pn": self.product.pn,
+            "title": self.product.title,
+            "description": self.description,
+            "qty": self.qty,
+            "price": self.price,
+            "discount": self.discount,
+            "hidden": self.hidden,
+        }
+
     def __str__(self) -> str:
-        return f"{self.quote.pk} | {self.quote.creator} | {self.quote.short_description} | {self.product}"
+        return f"{self.quote.pk} | {self.quote.creator} | {self.quote.description} | {self.product}"

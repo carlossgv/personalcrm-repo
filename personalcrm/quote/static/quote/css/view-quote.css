@@ -1,0 +1,67 @@
+p {
+  font-size: 15px;
+  margin-bottom: 0.1rem;
+}
+
+.company-info {
+    display: flex;
+    justify-content: space-between;
+    text-align: end;
+    margin-bottom: 2rem;
+  }
+  
+.customer-info {
+display: flex;
+margin-bottom: 2rem;
+}
+
+.customer-info-right {
+text-align: left;
+margin-left: 2rem;
+}
+
+table {
+  margin-bottom: 2rem;
+}
+
+thead {
+  background-color: black;
+  color: white;
+}
+
+tr {
+  font-size: 15px;
+}
+
+.row-description {
+  padding-right: 3rem;
+}
+
+.terms-and-total {
+    display: flex;
+    justify-content: space-between;
+}
+
+.totaling-div {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+}
+
+.totals {
+    width: 40%;
+    padding-right: 3rem;
+}
+
+
+@media print {
+  table {
+    break-inside: auto;
+  }
+  tr, .terms-and-total {
+    break-inside: avoid;
+  }
+}
+@page {
+  size: letter portrait;
+}
