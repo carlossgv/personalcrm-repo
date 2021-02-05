@@ -38,6 +38,9 @@ function hideHiddenRow(tr) {
   $(tr).hide();
 }
 
+function LinkFormatter(value, row, index) {
+  return `<a href="edit-quote/${value}">${value}</a>`
+}
 
 function updateAmount(tr) {
   let qty;
