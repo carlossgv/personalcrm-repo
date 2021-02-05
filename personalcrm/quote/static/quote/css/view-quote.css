@@ -1,5 +1,31 @@
-@media (max-width: 850px) {
-  .company-info, .customer-info {
+@media print {
+  .company-info {
+    display: flex;
+    justify-content: space-between;
+    text-align: end;
+    margin-bottom: 2rem;
+  }
+
+  table {
+    break-inside: auto;
+  }
+
+  thead {
+    -webkit-print-color-adjust: exact;
+  }
+
+  tr,
+  .terms-and-total {
+    break-inside: avoid;
+  }
+}
+@page {
+  size: letter portrait;
+}
+
+@media screen (max-width: 850px) {
+  .company-info,
+  .customer-info {
     flex-direction: column;
     justify-content: center;
     text-align: center;
@@ -8,8 +34,6 @@
   .general-info-left {
     margin-bottom: 1rem;
   }
-
-
 }
 
 @media (min-width: 850px) {
@@ -64,20 +88,11 @@ tr {
   font-weight: bold;
 }
 
+.terms {
+  padding-left: 3rem;
+}
+
 .totals {
   width: 40%;
   padding-right: 3rem;
-}
-
-@media print {
-  table {
-    break-inside: auto;
-  }
-  tr,
-  .terms-and-total {
-    break-inside: avoid;
-  }
-}
-@page {
-  size: letter portrait;
 }
