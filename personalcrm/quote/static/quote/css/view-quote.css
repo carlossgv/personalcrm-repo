@@ -14,16 +14,20 @@
     -webkit-print-color-adjust: exact;
   }
 
-  tr,
+  td {
+    font-size: 13px;
+  }
+
   .terms-and-total {
     break-inside: avoid;
   }
 }
+
 @page {
   size: letter portrait;
 }
 
-@media screen (max-width: 850px) {
+@media screen and (max-width: 850px) {
   .company-info,
   .customer-info {
     flex-direction: column;
@@ -31,9 +35,18 @@
     text-align: center;
   }
 
+  #quote-id {
+    margin-top: 2rem;
+  }
+
+  .customer-info-right {
+    text-align: center;
+  }
+
   .general-info-left {
     margin-bottom: 1rem;
   }
+
 }
 
 @media (min-width: 850px) {
@@ -48,16 +61,24 @@
     text-align: end;
     margin-bottom: 2rem;
   }
+
+  .customer-info-right {
+    text-align: left;
+    margin-left: 2rem;
+  }
+}
+
+.customer-info p {
+  margin-bottom: 0.1rem;
+}
+
+.company-details {
+  margin-bottom: 0.1rem;
 }
 
 .customer-info {
   display: flex;
   margin-bottom: 2rem;
-}
-
-.customer-info-right {
-  text-align: left;
-  margin-left: 2rem;
 }
 
 table {

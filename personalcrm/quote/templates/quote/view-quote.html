@@ -16,7 +16,7 @@
             <p class="company-details">{{company.address}}.</p>
             <p class="company-details">{{company.city}}, {{company.state}}.</p>
             <p class="company-details">T. {{company.phone}}</p>
-            <h4>Quote #{{ quote.pk }}</h4>
+            <h4 id="quote-id">Quote #{{ quote.pk }}</h4>
 
         </div>
     </div>
@@ -33,7 +33,7 @@
     <div class="customer-info-right">
         <div>
             <p>Date: {{quote.creation_date}}</p>
-            <p class="customer-details">Sales Representative: {{quote.creator.first_name}} {{quote.creator.last_name}}</p>
+            <p>Sales Representative: {{quote.creator.first_name}} {{quote.creator.last_name}}</p>
         </div>
     </div>
 </div>
