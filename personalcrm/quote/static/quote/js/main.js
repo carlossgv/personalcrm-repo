@@ -21,6 +21,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Update rows when editing quotes
   $.each($('.product-row'), (index, row) => {
+    if ($(row).find('.hidden-field').val() == 'True') {
+      hideRow(row);
+    }
     updateAmount(row);
   });
   console.log('document loaded');
@@ -30,6 +33,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // TODO Implement accounting.js to format columns
 function formatColumns() {}
+
+function hideHiddenRow(tr) {
+  $(tr).hide();
+}
+
 
 function updateAmount(tr) {
   let qty;
@@ -136,11 +144,24 @@ function deleteRow(tr) {
   $(tr).remove();
 }
 
+
 function hideRow(tr) {
   if ($(tr).find('.hidden-field').val() == 'True') {
     $(tr).css('background-color', 'gainsboro');
+
+    $(tr).find('.qty').val(0);
+    $(tr).find('.price').val(0);
+    $(tr).find('.discount').val(0);
+    $(tr).find('.product-description').val("");
+
+    updateProduct(tr);
+    updateAmount(tr)
+
   } else {
     $(tr).css('background-color', 'white');
+
+    updateProduct(tr);
+    updateAmount(tr);
   }
 }
 
