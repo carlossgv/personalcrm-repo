@@ -16,6 +16,9 @@ class UserCompany(models.Model):
     state = models.CharField(max_length=50)
     phone = models.CharField(max_length=50)
 
+    class Meta:
+        verbose_name_plural = "Users Companies"
+
 
 class Brand(models.Model):
     name = models.CharField(max_length=50, unique=True)
