@@ -6,24 +6,30 @@ body {
   margin-bottom: 2rem;
 }
 
+.internal-body {
+  max-width: 50rem;
+}
+
 .form-label {
   margin-bottom: 0;
 }
 
-#generalInfo-flex {
-}
-
 #termsAndTotals {
   display: flex;
+  justify-content: space-between;
+}
+
+.totals {
+  padding: 0.5rem;
 }
 
 .total-row {
+  font-weight: bold;
   display: flex;
+  justify-content:space-between;
 }
 
-.discount-column {
-  /* display: flex;
-  height: max-content;
-  vertical-align: middle; */
+.tax {
+  width: 30%;
+  margin-left: 1rem;
 }
-

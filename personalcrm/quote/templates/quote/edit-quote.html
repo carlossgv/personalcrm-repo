@@ -1,6 +1,7 @@
 {% extends 'quote/layout.html' %}
 
 {% block body %}
+<div class="container internal-body">
     <h1>Edit Quote #{{ quote.pk }}</h1>
     <form id="new-quote-form" action="{% url 'edit-quote' quote_id=quote.pk %}" method="post">{% csrf_token %}
         <div id="general-info" class="form-control">
@@ -43,7 +44,7 @@
                 <input type="text" class="form-control" name="description" id="description" placeholder="" value="{{ quote.short_description }}">
             </div>
         </div>
-        <div class="product-info">
+        <div class="table-responsive product-info">
             <table class="table" id="form-table">
                 <thead>
                     <tr>
@@ -71,7 +72,6 @@
                                 <h6 class="product-title"></h6>
                                 <p class="product-brand"></p>
                                 <textarea class="form-control product-description" name="custom-product-description" cols="30" rows="5">{{ row.description }}</textarea>
-                            </div>
                         </td>
                         <td class="qty-column">
                             <div class="form-group">
@@ -112,10 +112,11 @@
                     {% endfor %}
                 </tbody>
             </table>
+        </div>
             <div>
                 <button type="button" class="btn btn-primary" id="new-item">Add new item</buttont>
             </div>
-        </div>
+        
         <div class="form-control" id="termsAndTotals">
             <div class="terms">
                 <label for="terms" class="form-label">Terms & conditions</label>
@@ -160,4 +161,5 @@
         <button type="submit" class="btn btn-primary">Edit Quote</button>
         <a role="button" href="{% url 'view-quote' quote_id=quote.pk %}" class="btn btn-outline-primary">View Quote</a>
     </form>
+</div>
 {% endblock body %}
