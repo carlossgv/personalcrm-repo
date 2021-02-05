@@ -157,7 +157,7 @@
                 <textarea class="form-control "name="internal-notes" id="internal-notes" cols="30" rows="5" placeholder="Notes for your personal user, they are not going to appear in quote">{{ quote.internal_note }}</textarea>
             </div>
         </div>
-        <button type="button" class="btn btn-outline-primary">Preview Quote</button>
         <button type="submit" class="btn btn-primary">Edit Quote</button>
+        <a role="button" href="{% url 'view-quote' quote_id=quote.pk %}" class="btn btn-outline-primary">View Quote</a>
     </form>
 {% endblock body %}

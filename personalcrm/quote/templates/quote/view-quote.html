@@ -50,19 +50,35 @@
     </thead>
     <tbody>
         {% for product in products %}
-        <tr class="product-row">
-            <th class="row-number"></th>
-            <td class="row-description">
-                <div>{{ product.title }}</div>
-                <div>{{ product.description|linebreaks }}</div>
-            </td>
-            <td class='qty'>{{product.qty}}</td>
-            <td class='price'>{{product.price}}</td>
-            <td class='discount'>{{product.discount}}</td>
-            <td>
-                <div class="amount"></div>
-            </td>
-        </tr>
+            {% if product.hidden %}
+                <tr class="product-row" hidden>
+                    <th></th>
+                    <td class="row-description">
+                        <div>{{ product.title }}</div>
+                        <div>{{ product.description|linebreaks }}</div>
+                    </td>
+                    <td class='qty'>{{product.qty}}</td>
+                    <td class='price'>{{product.price}}</td>
+                    <td class='discount'>{{product.discount}}</td>
+                    <td>
+                        <div class="amount"></div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr class="product-row">
+                    <th class="row-number"></th>
+                    <td class="row-description">
+                        <div>{{ product.title }}</div>
+                        <div>{{ product.description|linebreaks }}</div>
+                    </td>
+                    <td class='qty'>{{product.qty}}</td>
+                    <td class='price'>{{product.price}}</td>
+                    <td class='discount'>{{product.discount}}</td>
+                    <td>
+                        <div class="amount"></div>
+                    </td>
+                </tr>
+            {% endif %}
         {% endfor %}
     </tbody>
 </table>
