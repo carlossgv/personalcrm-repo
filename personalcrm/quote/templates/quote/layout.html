@@ -33,7 +33,6 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <div style="display: flex;" id="navbar-left">
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'quote-home' %}">Quotes</a>
               </li>
@@ -46,8 +45,6 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">Contacts</a>
               </li>
-            </div>
-            <div style="display: flex; float: right;" id="navbar-right">
               {% if user.is_authenticated %}
                 <li class="nav-item">
                   <a class="nav-link" href="#">Sign Out</a>
@@ -60,8 +57,7 @@
                   <a class="nav-link" href="#">Sign Up</a>
                 </li>
               {% endif %}
-            </div>
-          </uls>
+          </ul>
         </div>
       </div>
     </nav>

@@ -1,6 +1,7 @@
 {% extends 'quote/layout.html' %}
 
 {% block body %}
+<div class="container internal-body">
     <h1>Create Quote</h1>
     <form id="new-quote-form" action="{% url 'create-quote' %}" method="post">{% csrf_token %}
         <div id="general-info" class="form-control">
@@ -43,7 +44,7 @@
                 <input type="text" class="form-control" name="description" id="description" placeholder="">
             </div>
         </div>
-        <div class="product-info">
+        <div class="table-responsive product-info">
             <table class="table" id="form-table">
                 <thead>
                     <tr>
@@ -70,7 +71,7 @@
                                 <h6 class="product-title"></h6>
                                 <p class="product-brand"></p>
                                 <textarea class="form-control product-description" name="custom-product-description" cols="30" rows="5"></textarea>
-                            </div>
+                            
                         </td>
                         <td class="qty-column">
                             <div class="form-group">
@@ -105,10 +106,11 @@
                     </tr>
                 </tbody>
             </table>
+        </div> 
             <div>
                 <button type="button" class="btn btn-primary" id="new-item">Add new item</buttont>
             </div>
-        </div>
+        
         <div class="form-control" id="termsAndTotals">
             <div class="terms">
                 <label for="terms" class="form-label">Terms & conditions</label>
@@ -117,7 +119,7 @@
             <div class="totals">
                 <div class="total-row" id="subtotal-row">
                     <div class="total-label">
-                        Subtotal
+                        Subtotal:
                     </div>
                     <div class="total-amount" id="subtotal-amount">
                         0.00
@@ -125,7 +127,7 @@
                 </div>
                 <div class="total-row" id="tax-row">
                     <div class="total-label">
-                        Tax
+                        Tax:
                     </div>
                     <div class="form-group">
                         <input type="number" class="form-control tax"  name="tax" id="tax-input" placeholder="%" max="99.99" step="0.01" value="0">
@@ -136,7 +138,7 @@
                 </div>
                 <div class="total-row" id="total-row">
                     <div class="total-label">
-                        Total
+                        Total:
                     </div>
                     <div class="total-amount" id="total-amount">
                         0.00
@@ -152,4 +154,5 @@
         </div>
         <button type="submit" class="btn btn-primary">Create Quote</button>
     </form>
+</div>
 {% endblock body %}
