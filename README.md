@@ -20,8 +20,9 @@ As mentioned before, **PersonalCRM** can only run for the time being locally thr
  2. Create an environment to run your app: this step is not 100% required but it is strongly recommended, you should run the app in a controlled environment. If you don't know how to create one you can learn how-to [here](https://uoa-eresearch.github.io/eresearch-cookbook/recipe/2014/11/26/python-virtual-env/)
  3. Set up your environment variable for the `SECRET_KEY` within `settings.py`.
  4. Install the requirements with pip: run the following command inside the cloned folder `pip install -r requirements.txt`
- 5. Run the server: go to `PARENT_FOLDER/personalcrm` and run `python manage.py runserver`
- 6. Since not everything is implemented you should go to the following site [http://127.0.0.1:8000/quote/](http://127.0.0.1:8000/quote/)
+ 5. Make database migrations: run `python manage.py makemigrations` and `python manage.py migrate`
+ 6. Run the server: go to `PARENT_FOLDER/personalcrm` and run `python manage.py runserver`
+ 7. Since not everything is implemented you should go to the following site [http://127.0.0.1:8000/quote/](http://127.0.0.1:8000/quote/)
 
 
 # Usage
