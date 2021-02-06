@@ -29,8 +29,8 @@ As mentioned before, **PersonalCRM** can only run for the time being locally thr
 ## Quote Index
 You will be received with a table with all of your quotes, you can sort the table by ID and by Customer name; also, you will see a short description of the quote, reference number and creator (users and currently not implemented, you are free to create new users directly into User table or use the generic admin user with the following info:
 
-> Username: admin 
-> Password: adminuser123
+`Username: admin`
+`Password: adminuser123`
 
 There is also a "New Quote" button, guess what it does!
 
@@ -92,8 +92,8 @@ Because of the short time I didn't manage to feature the CRM as complete as I wo
 
 ## Users
 User register and login is going to be implemented soon. Remember, in the meantime everything should be done through users made in the data base or with the superuser:
-> Username: admin 
-> Password: adminuser123
+`Username: admin`
+`Password: adminuser123`
 
 ## Inventory
 
