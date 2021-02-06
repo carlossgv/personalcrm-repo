@@ -89,9 +89,9 @@ def create_or_edit_quote(data, user, method, quote_id=""):
         quoted_info.save()
 
     if method == "create":
-        return "quote created"
+        return "Quote created!"
     elif method == "edit":
-        return f"quote {quote_id} edited"
+        return f"Quote #{quote_id} edited!"
 
 
 def form_options():

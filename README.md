@@ -85,7 +85,7 @@ After pressing "Create Quote" you will be taken to the quote index and you'll se
 If you press any of the ID's within the quote index you will be taken to the "Edit Quote" site of the quote clicked. There you can make changes to your quote and saved them or you can view the quote for printing using the proper button at the bottom of the quote.
 
 ## Print Quote (View Quote)
-After pressing "View Quote" button you will be taken to a site where you can preview how your quote is going to look like. If you think it's OK press Ctrl+P or right click + Print... and you will have your quote ready to send to your customer!
+After pressing "View Quote" button you will be taken to a site where you can preview how your quote is going to look like, **DONT'T PANIC!**: in the app the quote may look a little  off, it should look better printed. If you think it's OK press Ctrl+P or right click + Print... and you will have your quote ready to send to your customer!
 
 
 # Short term future features

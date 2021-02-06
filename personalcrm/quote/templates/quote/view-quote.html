@@ -7,12 +7,12 @@
 
 <div class="company-info">
     <div class="general-info-left">
-        <img src="{% static 'quote/img/logo/Logo-IFC.jpg' %}" alt="Logo-IFC" width="200px">
+        <img src="{% static 'quote/img/logo/my-company-logo.png' %}" alt="Logo-IFC" width="150px">
     </div>
     <div class="general-info-right">
         <div>
             <h6><strong>{{company.name}}</strong></h6>
-            <p class="company-details">RUT: {{company.legal_id}}</p>
+            <p class="company-details">ID: {{company.legal_id}}</p>
             <p class="company-details">{{company.address}}.</p>
             <p class="company-details">{{company.city}}, {{company.state}}.</p>
             <p class="company-details">T. {{company.phone}}</p>
@@ -25,7 +25,7 @@
     <div class="customer-info-left">
         <div>
             <p>Customer: <strong>{{quote.company.name}}</strong></p>
-            <p class="customer-details">RUT: {{quote.company.legal_id}}</p>
+            <p class="customer-details">ID: {{quote.company.legal_id}}</p>
             <p class="customer-details">Address: {{quote.company.address}}. {{quote.company.city}}, {{quote.company.state}}</p>
             <p class="customer-details">Description: {{quote.description}} | Reference: {{quote.reference}}</p>
         </div>
