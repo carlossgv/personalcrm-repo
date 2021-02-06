@@ -50,7 +50,6 @@ def edit_quote(request, quote_id):
         )
 
     elif request.method == "POST":
-        print("ENTERED POST EDIT")
         # user = request.user
         # TODO CHANGE USER TO CURRENT USER OR SELECT USER
         user = User.objects.get(pk=1)
@@ -81,7 +80,6 @@ def create_quote(request):
         )
 
     elif request.method == "POST":
-        print("ENTERED POST CREATE")
 
         data = request.POST
 

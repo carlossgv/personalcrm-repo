@@ -10,11 +10,11 @@ class User(AbstractUser):
 class UserCompany(models.Model):
     user = models.ForeignKey(User, on_delete=PROTECT, related_name="user_company")
     name = models.CharField(max_length=50)
-    legal_id = models.CharField(max_length=50)
-    address = models.CharField(max_length=100)
-    city = models.CharField(max_length=50)
-    state = models.CharField(max_length=50)
-    phone = models.CharField(max_length=50)
+    legal_id = models.CharField(max_length=50, blank=True, null=True)
+    address = models.CharField(max_length=100, blank=True, null=True)
+    city = models.CharField(max_length=50, blank=True, null=True)
+    state = models.CharField(max_length=50, blank=True, null=True)
+    phone = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = "Users Companies"
@@ -42,12 +42,12 @@ class Product(models.Model):
     brand = models.ForeignKey(Brand, on_delete=PROTECT, related_name="brand_name")
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
-    list_price = models.IntegerField(null=True)
+    list_price = models.IntegerField(blank=True, null=True)
     multiplier = models.DecimalField(
         max_digits=5, decimal_places=3, null=True, blank=True
     )
     creator = models.ForeignKey(User, on_delete=PROTECT, related_name="product_creator")
-    editor = models.ForeignKey(User, on_delete=PROTECT, related_name="product_editor")
+    editor = models.ForeignKey(User, on_delete=PROTECT, related_name="product_editor",blank=True, null=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     edit_date = models.DateTimeField(auto_now=True)
     note = models.TextField(blank=True, null=True)
@@ -64,7 +64,7 @@ class Product(models.Model):
             "list_price": self.list_price,
             "multiplier": self.multiplier,
             "creator": self.creator.username,
-            "editor": self.editor.username,
+            # "editor": self.editor.username,
             "creation_date": self.creation_date,
             "edit_date": self.edit_date,
             "note": self.note,
@@ -73,19 +73,21 @@ class Product(models.Model):
 
 class Company(models.Model):
     name = models.CharField(max_length=20, unique=True)
-    legal_id = models.CharField(max_length=10, null=True, unique=True)
+    legal_id = models.CharField(max_length=10, null=True, blank=True, unique=True)
     email = models.EmailField(blank=True, null=True)
-    phone = models.CharField(max_length=12, null=True)
-    mobile = models.CharField(max_length=12, null=True)
+    phone = models.CharField(max_length=12, blank=True, null=True)
+    mobile = models.CharField(max_length=12, blank=True, null=True)
     category = models.ForeignKey(
         Category, on_delete=PROTECT, related_name="company_category"
     )
-    address = models.CharField(max_length=100, null=True)
-    city = models.CharField(max_length=50, null=True)
-    state = models.CharField(max_length=50, null=True)
-    country = models.CharField(max_length=50, null=True)
+    address = models.CharField(max_length=100, blank=True, null=True)
+    city = models.CharField(max_length=50, blank=True, null=True)
+    state = models.CharField(max_length=50, blank=True, null=True)
+    country = models.CharField(max_length=50, blank=True, null=True)
     creator = models.ForeignKey(User, on_delete=PROTECT, related_name="company_creator")
-    editor = models.ForeignKey(User, on_delete=PROTECT, related_name="company_editor")
+    editor = models.ForeignKey(
+        User, on_delete=PROTECT, related_name="company_editor", blank=True, null=True
+    )
     creation_date = models.DateTimeField(auto_now_add=True)
     edit_date = models.DateTimeField(auto_now=True)
 
@@ -99,14 +101,14 @@ class Company(models.Model):
 
 class Contact(models.Model):
     first_name = models.CharField(max_length=20)
-    middle_name = models.CharField(max_length=20, null=True)
-    last_name = models.CharField(max_length=20, null=True)
+    middle_name = models.CharField(max_length=20, blank=True, null=True)
+    last_name = models.CharField(max_length=20, blank=True, null=True)
     company = models.ForeignKey(
-        Company, on_delete=PROTECT, related_name="company_contact"
+        Company, on_delete=PROTECT, related_name="company_contact", blank=True, null=True
     )
     email = models.EmailField(blank=True, null=True)
-    phone = models.CharField(max_length=12, null=True)
-    mobile = models.CharField(max_length=12, null=True)
+    phone = models.CharField(max_length=12,blank=True,  null=True)
+    mobile = models.CharField(max_length=12,blank=True,  null=True)
     position = models.CharField(max_length=50, blank=True, null=True)
     creator = models.ForeignKey(User, on_delete=PROTECT, related_name="contact_creator")
     creation_date = models.DateTimeField(auto_now_add=True)
@@ -143,9 +145,7 @@ class Quote(models.Model):
         }
 
     def __str__(self) -> str:
-        return (
-            f"{self.pk} | {self.creator} | {self.reference} | {self.description}"
-        )
+        return f"{self.pk} | {self.creator} | {self.reference} | {self.description}"
 
 
 class QuotedProduct(models.Model):
