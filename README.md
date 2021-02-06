@@ -18,12 +18,10 @@ As mentioned before, **PersonalCRM** can only run for the time being locally thr
 
  1. Clone the repo: `git clone https://github.com/carlossgv/personalcrm-repo.git`
  2. Create an environment to run your app: this step is not 100% required but it is strongly recommended, you should run the app in a controlled environment. If you don't know how to create one you can learn how-to [here](https://uoa-eresearch.github.io/eresearch-cookbook/recipe/2014/11/26/python-virtual-env/)
- 3. Set up your environment variable for the `SECRET_KEY` within `settings.py`.
+ 3. Set up your environment variable for the `SECRET_KEY` within `settings.py`. You can get a key from [this website](https://miniwebtool.com/django-secret-key-generator/). If you don't know how to set an enviroment variable you can follow [this tutorial](https://www.youtube.com/watch?v=IolxqkL7cD8) for Windows, or [this one](https://www.youtube.com/watch?v=5iWhQWVXosU) for Mac/Linux. **IMPORTANT:** set the variable this way `export KEY_PERSONALCRM="key-generated-from-website"`
  4. Install the requirements with pip: run the following command inside the cloned folder `pip install -r requirements.txt`
- 5. Make database migrations: go to `PARENT_FOLDER/personalcrm` and run `python manage.py makemigrations` and `python manage.py migrate`
- 6. Run the server: run `python manage.py runserver`
- 7. Go to [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/) and login with the adminitrator user: `user:admin` `password: admin`
- 8. Since not everything is implemented you should go to the following site [http://127.0.0.1:8000/quote/](http://127.0.0.1:8000/quote/)
+ 5. Run the server: go to `PARENT_FOLDER/personalcrm` and run `python manage.py runserver`
+ 6. Since not everything is implemented you should go to the following site [http://127.0.0.1:8000/quote/](http://127.0.0.1:8000/quote/)
 
 
 # Usage
@@ -31,8 +29,8 @@ As mentioned before, **PersonalCRM** can only run for the time being locally thr
 ## Quote Index
 You will be received with a table with all of your quotes, you can sort the table by ID and by Customer name; also, you will see a short description of the quote, reference number and creator (users and currently not implemented, you are free to create new users directly into User table or use the generic admin user with the following info:
 
-`Username: admin`
-`Password: admin`
+> Username: admin 
+> Password: adminuser123
 
 There is also a "New Quote" button, guess what it does!
 
@@ -85,7 +83,7 @@ After pressing "Create Quote" you will be taken to the quote index and you'll se
 If you press any of the ID's within the quote index you will be taken to the "Edit Quote" site of the quote clicked. There you can make changes to your quote and saved them or you can view the quote for printing using the proper button at the bottom of the quote.
 
 ## Print Quote (View Quote)
-After pressing "View Quote" button you will be taken to a site where you can preview how your quote is going to look like, **DONT'T PANIC!**: in the app the quote may look a little  off, it should look better printed. If you think it's OK press Ctrl+P or right click + Print... and you will have your quote ready to send to your customer!
+After pressing "View Quote" button you will be taken to a site where you can preview how your quote is going to look like. If you think it's OK press Ctrl+P or right click + Print... and you will have your quote ready to send to your customer!
 
 
 # Short term future features
@@ -93,7 +91,9 @@ After pressing "View Quote" button you will be taken to a site where you can pre
 Because of the short time I didn't manage to feature the CRM as complete as I would want it, but definitely is something that is coming!
 
 ## Users
-User register and login is going to be implemented soon.
+User register and login is going to be implemented soon. Remember, in the meantime everything should be done through users made in the data base or with the superuser:
+> Username: admin 
+> Password: adminuser123
 
 ## Inventory
 
@@ -119,4 +119,3 @@ Hopefully the app is going to have support for a long time; if so, many CRM stuf
  - Beefier inventory system: automate stock management integrated to the CRM (example: deal invoiced automatically update the stock availability for the items sold).
  - Online team integration.
 
-Created by Carlos Gonzalez carlossgv@gmail.com
