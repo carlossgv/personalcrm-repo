@@ -22,7 +22,8 @@ As mentioned before, **PersonalCRM** can only run for the time being locally thr
  4. Install the requirements with pip: run the following command inside the cloned folder `pip install -r requirements.txt`
  5. Make database migrations: go to `PARENT_FOLDER/personalcrm` and run `python manage.py makemigrations` and `python manage.py migrate`
  6. Run the server: run `python manage.py runserver`
- 7. Since not everything is implemented you should go to the following site [http://127.0.0.1:8000/quote/](http://127.0.0.1:8000/quote/)
+ 7. Go to [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/) and login with the adminitrator user: `user:admin` `password: admin`
+ 8. Since not everything is implemented you should go to the following site [http://127.0.0.1:8000/quote/](http://127.0.0.1:8000/quote/)
 
 
 # Usage
@@ -92,9 +93,7 @@ After pressing "View Quote" button you will be taken to a site where you can pre
 Because of the short time I didn't manage to feature the CRM as complete as I would want it, but definitely is something that is coming!
 
 ## Users
-User register and login is going to be implemented soon. Remember, in the meantime everything should be done through users made in the data base or with the superuser:
-`Username: admin`
-`Password: admin`
+User register and login is going to be implemented soon.
 
 ## Inventory
 
