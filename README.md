@@ -8,9 +8,10 @@ With your **PersonalCRM** you will have a way to create, edit and print quotes u
 
 # Requirements
 
-Since this is a very early stage app you are going to be required to have basic knowledge of **SQL** to change and modify the tables so you can add your own Clients, Contacts and Products.
+ - **Git**
+ - **Python 3.X**
 
-Also, you should know basic **Django** in order to make it run locally.
+Since this is a very early stage app you are going to be required to have basic knowledge of **SQL** to change and modify the tables so you can add your own Clients, Contacts and Products. No need of an extra SQL tool, within the Django administration site you can create, update or delete any entry.
 
 # Installation
 
