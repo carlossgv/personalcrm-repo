@@ -12,6 +12,10 @@ def home(request):
 
 # TODO !! MAJOR CHANGE: IMPLEMENT DJANGO FORMS INSTEAD OF HTML FORMS
 
+def login(request):
+
+    return HttpResponseRedirect(reverse("admin:index"))
+
 
 def view_quote(request, quote_id):
     quote = Quote.objects.get(pk=quote_id)

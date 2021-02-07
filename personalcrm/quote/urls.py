@@ -3,9 +3,11 @@ from . import views
 
 urlpatterns = [
     path("", views.home, name="quote-home"),
+    path("login", views.login, name="login"),
     path("create-quote", views.create_quote, name="create-quote"),
     path("edit-quote/<int:quote_id>", views.edit_quote, name="edit-quote"),
     path("view-quote/<int:quote_id>", views.view_quote, name="view-quote"),
+
     # JSON routes
     path(
         "request-product-options",
