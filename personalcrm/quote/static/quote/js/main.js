@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
   if (window.location.pathname.includes('view-quote')) {
     $('nav').remove();
+
   }
 
   let new_quote_button = $('#new_quote_button');
@@ -26,20 +27,20 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     updateAmount(row);
   });
+
+
+
   console.log('document loaded');
 });
 
 // !===========================================================
-
-// TODO Implement accounting.js to format columns
-function formatColumns() {}
 
 function hideHiddenRow(tr) {
   $(tr).hide();
 }
 
 function LinkFormatter(value, row, index) {
-  return `<a href="edit-quote/${value}">${value}</a>`
+  return `<a href="edit-quote/${value}">${value}</a>`;
 }
 
 function updateAmount(tr) {
@@ -49,8 +50,14 @@ function updateAmount(tr) {
 
   if (window.location.pathname.includes('view-quote')) {
     qty = $(tr).find('.qty').html();
-    price = $(tr).find('.price').html();
-    discount = $(tr).find('.discount').html();
+    price = parseInt($(tr).find('.price').html());
+    $(tr)
+      .find('.price')
+      .html(accounting.formatMoney(price, { precision: 0 }));
+    discount = parseInt($(tr).find('.discount').html());
+    $(tr)
+      .find('.discount')
+      .html(accounting.formatMoney(discount, { precision: 0 }));
   } else {
     qty = $(tr).find('.qty').val();
     price = $(tr).find('.price').val();
@@ -75,7 +82,7 @@ function updateTotal() {
   let tax;
 
   if (window.location.pathname.includes('view-quote')) {
-    tax = accounting.unformat($('#tax-input').html());
+    tax = $('#tax-input').html();
   } else {
     tax = parseFloat($('#tax-input').val());
   }
@@ -147,7 +154,6 @@ function deleteRow(tr) {
   $(tr).remove();
 }
 
-
 function hideRow(tr) {
   if ($(tr).find('.hidden-field').val() == 'True') {
     $(tr).css('background-color', 'gainsboro');
@@ -155,11 +161,10 @@ function hideRow(tr) {
     $(tr).find('.qty').val(0);
     $(tr).find('.price').val(0);
     $(tr).find('.discount').val(0);
-    $(tr).find('.product-description').val("");
+    $(tr).find('.product-description').val('');
 
     updateProduct(tr);
-    updateAmount(tr)
-
+    updateAmount(tr);
   } else {
     $(tr).css('background-color', 'white');
 

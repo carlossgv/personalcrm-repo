@@ -6,6 +6,11 @@
     margin-bottom: 2rem;
   }
 
+  .customer-info {
+    display: flex;
+    justify-content: space-between;
+  }
+
   table {
     break-inside: auto;
   }
@@ -16,6 +21,11 @@
 
   td {
     font-size: 13px;
+  }
+
+  p {
+    font-size: 13px;
+    margin-bottom: 0.1rem;
   }
 
   .terms-and-total {
@@ -29,7 +39,8 @@
 
 @media screen and (max-width: 850px) {
   .company-info,
-  .customer-info {
+  .customer-info,
+  .totaling-div {
     flex-direction: column;
     justify-content: center;
     text-align: center;
@@ -47,6 +58,16 @@
     margin-bottom: 1rem;
   }
 
+  .totaling-div > * {
+    margin-bottom: 0.1rem;
+  }
+
+  .totals {
+    padding-right: 0.5rem;
+  }
+  .terms {
+    padding-left: 0.5rem;
+  }
 }
 
 @media (min-width: 850px) {
@@ -65,6 +86,14 @@
   .customer-info-right {
     text-align: left;
     margin-left: 2rem;
+  }
+  .totals {
+    width: 40%;
+    padding-right: 3rem;
+  }
+
+  .terms {
+    padding-left: 3rem;
   }
 }
 
@@ -107,13 +136,4 @@ tr {
   display: flex;
   justify-content: space-between;
   font-weight: bold;
-}
-
-.terms {
-  padding-left: 3rem;
-}
-
-.totals {
-  width: 40%;
-  padding-right: 3rem;
 }
