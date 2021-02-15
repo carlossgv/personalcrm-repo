@@ -1,3 +1,8 @@
+.view-quote-body {
+  max-width: 950px;
+  margin: 2rem auto 0 auto;
+}
+
 @media print {
   .company-info {
     display: flex;
@@ -64,6 +69,7 @@
 
   .totals {
     padding-right: 0.5rem;
+    font-size: 0.8rem;
   }
   .terms {
     padding-left: 0.5rem;
@@ -136,4 +142,15 @@ tr {
   display: flex;
   justify-content: space-between;
   font-weight: bold;
+}
+
+.row-description {
+  text-align: left;
+}
+
+th {
+  text-align: center;
+}
+tbody td {
+  text-align: center;
 }
