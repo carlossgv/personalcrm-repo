@@ -14,3 +14,6 @@ build/
 tests/report/
 personalcrm/csv-files-for-db
 personalcrm/TODOLIST.txt
+personalcrm/quote/static/quote/js/accounting-spanish.js
+personalcrm/quote/templates/quote/layout-spanish.html
+personalcrm/quote/templates/quote/view-quote-spanish.html
