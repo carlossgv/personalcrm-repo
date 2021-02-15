@@ -2,7 +2,9 @@
 
 {% block body %}
 <div class="container internal-body">
-    <h1>Edit Quote #{{ quote.pk }}</h1>
+    <div class="title-div">
+        <h1>Edit Quote #{{ quote.pk }}</h1>
+    </div>
     <form id="new-quote-form" action="{% url 'edit-quote' quote_id=quote.pk %}" method="post">{% csrf_token %}
         <div id="general-info" class="form-control">
             <div id="generalInfo-flex">
@@ -114,7 +116,7 @@
             </table>
         </div>
             <div>
-                <button type="button" class="btn btn-primary" id="new-item">Add new item</buttont>
+                <button type="button" class="btn crm-button" id="new-item">Add new item</buttont>
             </div>
         
         <div class="form-control" id="termsAndTotals">
@@ -158,7 +160,7 @@
                 <textarea class="form-control "name="internal-notes" id="internal-notes" cols="30" rows="5" placeholder="Notes for your personal user, they are not going to appear in quote">{{ quote.internal_note }}</textarea>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <button type="submit" class="btn crm-button">Save Changes</button>
         <a role="button" href="{% url 'view-quote' quote_id=quote.pk %}" class="btn btn-outline-primary">View Quote</a>
     </form>
 </div>
