@@ -1,4 +1,4 @@
-from django.http.response import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http.response import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from .models import Product, User, Company, Contact, Quote, QuotedProduct, UserCompany
