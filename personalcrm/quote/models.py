@@ -8,14 +8,14 @@ class User(AbstractUser):
 
 
 class UserCompany(models.Model):
-    user = models.ForeignKey(User, on_delete=PROTECT, related_name="user_company", unique=True)
+    user = models.OneToOneField(User, on_delete=PROTECT, related_name="user_company")
     name = models.CharField(max_length=50)
     legal_id = models.CharField(max_length=50, blank=True, null=True)
     address = models.CharField(max_length=100, blank=True, null=True)
     city = models.CharField(max_length=50, blank=True, null=True)
     state = models.CharField(max_length=50, blank=True, null=True)
     phone = models.CharField(max_length=50, blank=True, null=True)
-    logo = models.ImageField(blank=True, null=True)
+    logo = models.ImageField(default='default-logo.png', upload_to='company_logos')
     laguange = models.CharField(max_length=15, choices=[('english', 'English'), ('spanish', 'Spanish')], default="English")
 
     class Meta:

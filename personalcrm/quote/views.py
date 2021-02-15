@@ -20,11 +20,8 @@ def login(request):
 def view_quote(request, quote_id):
     quote = Quote.objects.get(pk=quote_id)
     products = QuotedProduct.objects.filter(quote=quote)
-    # TODO Pass selected logo (not hardcoded)
-    logo = "img"
+
     company = UserCompany.objects.get(pk=1)
-
-
 
     return render(
         request,
