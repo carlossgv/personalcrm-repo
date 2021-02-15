@@ -8,17 +8,21 @@ class User(AbstractUser):
 
 
 class UserCompany(models.Model):
-    user = models.ForeignKey(User, on_delete=PROTECT, related_name="user_company")
+    user = models.ForeignKey(User, on_delete=PROTECT, related_name="user_company", unique=True)
     name = models.CharField(max_length=50)
     legal_id = models.CharField(max_length=50, blank=True, null=True)
     address = models.CharField(max_length=100, blank=True, null=True)
     city = models.CharField(max_length=50, blank=True, null=True)
     state = models.CharField(max_length=50, blank=True, null=True)
     phone = models.CharField(max_length=50, blank=True, null=True)
+    logo = models.ImageField(blank=True, null=True)
+    laguange = models.CharField(max_length=15, choices=[('english', 'English'), ('spanish', 'Spanish')], default="English")
 
     class Meta:
         verbose_name_plural = "Users Companies"
 
+    def __str__(self) -> str:
+        return f"{self.name} | {self.user.username}"
 
 class Brand(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -46,8 +50,11 @@ class Product(models.Model):
     multiplier = models.DecimalField(
         max_digits=5, decimal_places=3, null=True, blank=True
     )
+    stock = models.IntegerField(blank=True, null=True, default=0)
     creator = models.ForeignKey(User, on_delete=PROTECT, related_name="product_creator")
-    editor = models.ForeignKey(User, on_delete=PROTECT, related_name="product_editor",blank=True, null=True)
+    editor = models.ForeignKey(
+        User, on_delete=PROTECT, related_name="product_editor", blank=True, null=True
+    )
     creation_date = models.DateTimeField(auto_now_add=True)
     edit_date = models.DateTimeField(auto_now=True)
     note = models.TextField(blank=True, null=True)
@@ -63,6 +70,7 @@ class Product(models.Model):
             "description": self.description,
             "list_price": self.list_price,
             "multiplier": self.multiplier,
+            "stock": self.stock,
             "creator": self.creator.username,
             # "editor": self.editor.username,
             "creation_date": self.creation_date,
@@ -104,11 +112,15 @@ class Contact(models.Model):
     middle_name = models.CharField(max_length=20, blank=True, null=True)
     last_name = models.CharField(max_length=20, blank=True, null=True)
     company = models.ForeignKey(
-        Company, on_delete=PROTECT, related_name="company_contact", blank=True, null=True
+        Company,
+        on_delete=PROTECT,
+        related_name="company_contact",
+        blank=True,
+        null=True,
     )
     email = models.EmailField(blank=True, null=True)
-    phone = models.CharField(max_length=12,blank=True,  null=True)
-    mobile = models.CharField(max_length=12,blank=True,  null=True)
+    phone = models.CharField(max_length=12, blank=True, null=True)
+    mobile = models.CharField(max_length=12, blank=True, null=True)
     position = models.CharField(max_length=50, blank=True, null=True)
     creator = models.ForeignKey(User, on_delete=PROTECT, related_name="contact_creator")
     creation_date = models.DateTimeField(auto_now_add=True)
