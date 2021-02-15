@@ -1,0 +1,25 @@
+{% extends 'quote/layout.html' %}
+
+{% block body %}
+    <div class="index-title">
+      <h1>Inventory Index</h1>
+      <button type="button "id="new_product" class="btn crm-button">New Product</button>
+    </div>
+    <table 
+        data-toggle="table"
+        data-url="quote-index"
+        data-pagination="true"
+        data-search="true"
+        id="index-table">
+        <thead>
+          <tr>
+            <th data-field="id" data-sortable="true" data-formatter="LinkFormatter">ID</th>
+            <th data-field="customer" data-sortable="true">Customer</th>
+            <th data-field="description">Description</th>
+            <th data-field="reference">Reference</th>
+            <th data-field="creator">Creator</th>
+          </tr>
+        </thead>
+      </table>
+    
+{% endblock body %}
