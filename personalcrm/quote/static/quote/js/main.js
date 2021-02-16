@@ -30,8 +30,12 @@ function hideHiddenRow(tr) {
   $(tr).hide();
 }
 
-function LinkFormatter(value, row, index) {
+function QuoteLinkFormatter(value, row, index) {
   return `<a href="edit-quote/${value}">${value}</a>`;
+}
+
+function InventoryLinkFormatter(value, row, index) {
+  return `<a href="product/${value}">${value}</a>`;
 }
 
 function updateAmount(tr) {
@@ -125,14 +129,8 @@ function updateProduct(tr) {
   pn = pn.split(':')[0];
 
   // TODO: CATCH ERROR WHEN INPUT DOESNT MATCH SITE
-  let product_url;
-  if (window.location.pathname.includes('edit-quote')) {
-    product_url = `../product/${pn}`;
-  } else if (window.location.pathname.includes('create-quote')) {
-    product_url = `product/${pn}`;
-  }
 
-  fetch(product_url)
+  fetch(`../inventory/product/${pn}`)
     .then((response) => response.json())
     .then((data) => {
       $(tr).find('.product-title').html(data['title']);

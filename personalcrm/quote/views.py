@@ -106,11 +106,11 @@ def get_product_options(request):
     return JsonResponse({"product_options": product_options})
 
 
-def get_product_info(request, pn):
+# def get_product_info(request, pn):
 
-    product = Product.objects.get(pn=pn)
+#     product = Product.objects.get(pn=pn)
 
-    return JsonResponse(product.serialize(), safe=False)
+#     return JsonResponse(product.serialize(), safe=False)
 
 
 def get_quote_index(request):

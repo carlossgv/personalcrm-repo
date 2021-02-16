@@ -6,4 +6,6 @@ urlpatterns = [
     path("create-product", views.new_product_form, name="create-product"),
     # Json Paths
     path("inventory-index", views.get_inventory_index, name="inventory-index"),
+    path("product/<str:pn>", views.product_info, name="product-info"),
+
 ]
