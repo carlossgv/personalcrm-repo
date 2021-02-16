@@ -27,6 +27,10 @@ nav {
   margin-bottom: 2rem;
 }
 
+.form-control {
+  margin-bottom: 0.5rem!important;
+}
+
 .container h1 {
   font-family: 'Ubuntu', sans-serif;
   margin: auto 0;
@@ -41,6 +45,12 @@ nav {
   background-color: #808080;
   color: #dcdcdc;
 }
+
+.crm-button a {
+  text-decoration: none;
+  color: #dcdcdc;
+}
+
 
 thead tr {
   background-color: #6082B6;

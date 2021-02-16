@@ -3,7 +3,7 @@
 {% block body %}
     <div class="index-title">
       <h1>Inventory Index</h1>
-      <button type="button "id="new_product" class="btn crm-button">New Product</button>
+      <button  type="button "id="new_product" class="btn crm-button"><a href="{% url 'create-product' %}">New Product</a></button>
     </div>
     <table 
         data-toggle="table"

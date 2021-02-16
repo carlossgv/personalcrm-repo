@@ -6,155 +6,157 @@
         <h1>Create Quote</h1>
     </div>
     <form id="new-quote-form" action="{% url 'create-quote' %}" method="post">{% csrf_token %}
-        <div id="general-info" class="form-control">
-            <div id="generalInfo-flex">
-                <div id="general-left">
-                    <div class="form-group">
-                        <label class="form-label" for="companyOptions">Customer:</label>
-                        <input class="form-control" name="company" list="companyOptions" placeholder="Type customer" required >
-                        <datalist id="companyOptions">
-                            {% for company in company_options %}
-                                <option>{{ company.id }}: {{ company.info }}</option>
-                            {% endfor %}
-                        </datalist>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="contactOptions">Contact:</label>
-                        <input class="form-control" name="contact" list="contactOptions" placeholder="Type contact">
-                        <datalist id="contactOptions">
-                            {% for contact in contact_options %}
-                                <option>
-                                    {{ contact.id }}: {{ contact.info }}
-                                </option>
-                            {% endfor %}
-                        </datalist>
-                    </div>
-                </div> 
-                <div id="general-right">
-                    <div class="form-group">
-                        <label for="reference">Reference #:</label>
-                        <input type="text" class="form-control" name="reference" id="reference" placeholder="">
-                    </div>
-                    <div class="form-group">
-                        <label for="reference">Date:</label>
-                        <input data-provide="datepicker" class="form-control datepicker" name="date" required>
-                    </div>
-                </div>   
-            </div>
-            <div class="form-group">
-                <label for="description">Description:</label>
-                <input type="text" class="form-control" name="description" id="description" placeholder="">
-            </div>
-        </div>
-        <div class="table-responsive product-info">
-            <table class="table" id="form-table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Qty</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Discount</th>
-                        <th scope="col">Amount</th>
-                        <th scope="col">Hidden</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr id="initial-row">
-                        <th class="row-number" scope="row">1</th>
-                        <td class="description-column">
-                            <input class="product-options" name="product-options"  list="product-options" id="productDataList" placeholder="Product">
-                                <datalist id="product-options">
-                                    {% for product in product_options %}
-                                    <option>{{ product.info }} - {{ product.id }}</option>
-                                    {% endfor %}
-                                </datalist>
-                                <h6 class="product-title"></h6>
-                                <p class="product-brand"></p>
-                                <textarea class="form-control product-description" name="custom-product-description" cols="30" rows="5"></textarea>
-                            
-                        </td>
-                        <td class="qty-column">
-                            <div class="form-group">
-                                <input type="number" class="form-control qty" name="qty" placeholder="Qty" min="0" step="1" >
-                            </div>
-                        </td>
-                        <td class="price-column">
-                            <div class="form-group">
-                                <input type="number" class="form-control price" name="price" min="0" step="0.01" placeholder="Price" >
-                            </div>
-                        </td>
-                        <td class="discount-column">
-                            <div class="form-group">
-                                <input type="number" class="form-control discount" name="discount" id="discount" placeholder="%" min="0" max="99.99" step="0.01">
-                            </div>
-                        </td>
-                        <td class="amount-column">
-                            <div class="amount"></div>
-                        </td>
-                        <!-- TODO Implement checkboxes for hidden attribute -->
-                        <td class="hidden-column">
-                            <select class="form-select hidden-field" name="hidden">                            
-                                <option value="True">Yes</option>
-                                <option value="False" selected>No</option>                        
-                            </select>
-                        </td>
-                        <td class="deleteRow-column">
-                            <div class="form-check">
-                                <button class="btn btn-danger deleteRowButton" type="button">x</button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div> 
-            <div>
-                <button type="button" class="btn crm-button" id="new-item">Add new item</buttont>
-            </div>
-        
-        <div class="form-control" id="termsAndTotals">
-            <div class="terms">
-                <label for="terms" class="form-label">Terms & conditions</label>
-                <textarea class="form-control "name="terms" id="terms" cols="30" rows="5"></textarea>
-            </div>
-            <div class="totals">
-                <div class="total-row" id="subtotal-row">
-                    <div class="total-label">
-                        Subtotal:
-                    </div>
-                    <div class="total-amount" id="subtotal-amount">
-                        0.00
-                    </div>
+        <div class="form-control">
+            <div id="general-info" class="form-group">
+                <div id="generalInfo-flex">
+                    <div id="general-left">
+                        <div class="form-group">
+                            <label class="form-label" for="companyOptions">Customer:</label>
+                            <input class="form-control" name="company" list="companyOptions" placeholder="Type customer" required >
+                            <datalist id="companyOptions">
+                                {% for company in company_options %}
+                                    <option>{{ company.id }}: {{ company.info }}</option>
+                                {% endfor %}
+                            </datalist>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="contactOptions">Contact:</label>
+                            <input class="form-control" name="contact" list="contactOptions" placeholder="Type contact">
+                            <datalist id="contactOptions">
+                                {% for contact in contact_options %}
+                                    <option>
+                                        {{ contact.id }}: {{ contact.info }}
+                                    </option>
+                                {% endfor %}
+                            </datalist>
+                        </div>
+                    </div> 
+                    <div id="general-right">
+                        <div class="form-group">
+                            <label for="reference">Reference #:</label>
+                            <input type="text" class="form-control" name="reference" id="reference" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="reference">Date:</label>
+                            <input data-provide="datepicker" class="form-control datepicker" name="date" required>
+                        </div>
+                    </div>   
                 </div>
-                <div class="total-row" id="tax-row">
-                    <div class="total-label">
-                        Tax:
-                    </div>
-                    <div class="form-group">
-                        <input type="number" class="form-control tax"  name="tax" id="tax-input" placeholder="%" max="99.99" step="0.01" value="0">
-                    </div>
-                    <div class="total-amount" id="tax-amount">
-                        0.00
-                    </div>
-                </div>
-                <div class="total-row" id="total-row">
-                    <div class="total-label">
-                        Total:
-                    </div>
-                    <div class="total-amount" id="total-amount">
-                        0.00
-                    </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <input type="text" class="form-control" name="description" id="description" placeholder="">
                 </div>
             </div>
-        </div>
-        <div class="form-control" id="notes">
-            <div class="terms">
-                <label for="internal-notes" class="form-label">Notes</label>
-                <textarea class="form-control "name="internal-notes" id="internal-notes" cols="30" rows="5" placeholder="Notes for your personal user, they are not going to appear in quote"></textarea>
+            <div class="table-responsive product-info">
+                <table class="table" id="form-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Qty</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Discount</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Hidden</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="initial-row">
+                            <th class="row-number" scope="row">1</th>
+                            <td class="description-column">
+                                <input class="product-options" name="product-options"  list="product-options" id="productDataList" placeholder="Product">
+                                    <datalist id="product-options">
+                                        {% for product in product_options %}
+                                        <option>{{ product.info }} - {{ product.id }}</option>
+                                        {% endfor %}
+                                    </datalist>
+                                    <h6 class="product-title"></h6>
+                                    <p class="product-brand"></p>
+                                    <textarea class="form-control product-description" name="custom-product-description" cols="30" rows="5"></textarea>
+                                
+                            </td>
+                            <td class="qty-column">
+                                <div class="form-group">
+                                    <input type="number" class="form-control qty" name="qty" placeholder="Qty" min="0" step="1" >
+                                </div>
+                            </td>
+                            <td class="price-column">
+                                <div class="form-group">
+                                    <input type="number" class="form-control price" name="price" min="0" step="0.01" placeholder="Price" >
+                                </div>
+                            </td>
+                            <td class="discount-column">
+                                <div class="form-group">
+                                    <input type="number" class="form-control discount" name="discount" id="discount" placeholder="%" min="0" max="99.99" step="0.01">
+                                </div>
+                            </td>
+                            <td class="amount-column">
+                                <div class="amount"></div>
+                            </td>
+                            <!-- TODO Implement checkboxes for hidden attribute -->
+                            <td class="hidden-column">
+                                <select class="form-select hidden-field" name="hidden">                            
+                                    <option value="True">Yes</option>
+                                    <option value="False" selected>No</option>                        
+                                </select>
+                            </td>
+                            <td class="deleteRow-column">
+                                <div class="form-check">
+                                    <button class="btn btn-danger deleteRowButton" type="button">x</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> 
+                <div>
+                    <button type="button" class="btn crm-button" id="new-item">Add new item</buttont>
+                </div>
+            
+            <div id="termsAndTotals">
+                <div class="terms">
+                    <label for="terms" class="form-label">Terms & conditions</label>
+                    <textarea class="form-control "name="terms" id="terms" cols="30" rows="5"></textarea>
+                </div>
+                <div class="totals">
+                    <div class="total-row" id="subtotal-row">
+                        <div class="total-label">
+                            Subtotal:
+                        </div>
+                        <div class="total-amount" id="subtotal-amount">
+                            0.00
+                        </div>
+                    </div>
+                    <div class="total-row" id="tax-row">
+                        <div class="total-label">
+                            Tax:
+                        </div>
+                        <div class="form-group">
+                            <input type="number" class="form-control tax"  name="tax" id="tax-input" placeholder="%" max="99.99" step="0.01" value="0">
+                        </div>
+                        <div class="total-amount" id="tax-amount">
+                            0.00
+                        </div>
+                    </div>
+                    <div class="total-row" id="total-row">
+                        <div class="total-label">
+                            Total:
+                        </div>
+                        <div class="total-amount" id="total-amount">
+                            0.00
+                        </div>
+                    </div>
+                </div>
             </div>
+            <div  id="notes">
+                <div class="terms">
+                    <label for="internal-notes" class="form-label">Notes</label>
+                    <textarea class="form-control "name="internal-notes" id="internal-notes" cols="30" rows="5" placeholder="Notes for your personal user, they are not going to appear in quote"></textarea>
+                </div>
+            </div>
+            <button type="submit" class="btn crm-button">Create Quote</button>
         </div>
-        <button type="submit" class="btn crm-button">Create Quote</button>
     </form>
 </div>
 {% endblock body %}

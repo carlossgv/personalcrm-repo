@@ -1,13 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
   if (window.location.pathname.includes('view-quote')) {
     $('nav').remove();
-
-  }
-
-  let new_quote_button = $('#new_quote_button');
-
-  if (new_quote_button) {
-    new_quote_button.click(() => (location.href = 'create-quote'));
   }
 
   $('.datepicker').datepicker().datepicker('setDate', new Date());
@@ -27,8 +20,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     updateAmount(row);
   });
-
-
 
   console.log('document loaded');
 });

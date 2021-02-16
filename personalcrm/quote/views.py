@@ -12,21 +12,32 @@ def home(request):
 
 # TODO !! MAJOR CHANGE: IMPLEMENT DJANGO FORMS INSTEAD OF HTML FORMS
 
+
 def login(request):
 
     return HttpResponseRedirect(reverse("admin:index"))
 
 
+def logout(request):
+
+    return HttpResponseRedirect(reverse("admin:logout"))
+
+
 def view_quote(request, quote_id):
     quote = Quote.objects.get(pk=quote_id)
     products = QuotedProduct.objects.filter(quote=quote)
+    user = request.user
 
-    company = UserCompany.objects.get(pk=1)
+    company = UserCompany.objects.get(pk=user.id)
 
     return render(
         request,
         "quote/view-quote.html",
-        {"quote": quote, "products": [product.serialize() for product in products], "company": company},
+        {
+            "quote": quote,
+            "products": [product.serialize() for product in products],
+            "company": company,
+        },
     )
 
 
@@ -51,9 +62,7 @@ def edit_quote(request, quote_id):
         )
 
     elif request.method == "POST":
-        # user = request.user
-        # TODO CHANGE USER TO CURRENT USER OR SELECT USER
-        user = User.objects.get(pk=1)
+        user = request.user
         data = request.POST
         edit = create_or_edit_quote(data, user, "edit", quote_id)
 
@@ -81,12 +90,8 @@ def create_quote(request):
         )
 
     elif request.method == "POST":
-
+        user = request.user
         data = request.POST
-
-        # user = request.user
-        # TODO CHANGE USER TO CURRENT USER OR SELECT USER
-        user = User.objects.get(pk=1)
 
         create = create_or_edit_quote(data, user, "create")
         print(create)
@@ -114,8 +119,9 @@ def get_quote_index(request):
 
     return JsonResponse([quote.serialize() for quote in quotes], safe=False)
 
+
 def get_quote_products(request, quote_id):
 
-    products = QuotedProduct.objects.filter(quote = Quote.objects.get(pk=quote_id))
+    products = QuotedProduct.objects.filter(quote=Quote.objects.get(pk=quote_id))
 
     return JsonResponse([product.serialize() for product in products], safe=False)

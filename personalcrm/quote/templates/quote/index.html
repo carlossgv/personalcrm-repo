@@ -3,7 +3,7 @@
 {% block body %}
     <div class="index-title">
       <h1>Quote Index</h1>
-      <button type="button "id="new_quote_button" class="btn crm-button">New Quote</button>
+      <button  type="button "id="new_quote_button" class="btn crm-button"><a href="{% url 'create-quote' %}">New Quote</a></button>
     </div>
     <table 
         data-toggle="table"

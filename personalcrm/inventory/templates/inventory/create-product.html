@@ -1,6 +1,14 @@
 {% extends 'quote/layout.html' %}
+{% load crispy_forms_tags %}
 
 {% block body %}
+    <form action="" method="post" class="bootstrap4">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form | crispy }}
+            <button class="btn crm-button" type="submit">Create New Product</button>
+        </div>
+    </form>
 
 
 
