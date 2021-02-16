@@ -57,3 +57,9 @@ def new_product_form(request):
         form = NewProductForm()
 
         return render(request, "inventory/create-product.html", {"form": form})
+
+def product_info(request, pn):
+
+    product = Product.objects.get(pn=pn)
+
+    return JsonResponse(product.serialize(), safe=False)

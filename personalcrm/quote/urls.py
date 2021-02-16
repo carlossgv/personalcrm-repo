@@ -15,11 +15,6 @@ urlpatterns = [
         views.get_product_options,
         name="request-product-options",
     ),
-    path(
-        "product/<str:pn>",
-        views.get_product_info,
-        name="product-info",
-    ),
     path("quote-index", views.get_quote_index, name="quote-index"),
     path("quote-products/<int:quote_id>", views.get_quote_products, name="quote-products"),
 ]
